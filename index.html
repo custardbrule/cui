@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Document</title>
+    <script type="module" src="/components/headers/v1/index.js"></script>
+    <script type="module" src="/components/cards/v1/index.js"></script>
+    <script type="module" src="/components/cards/v2/index.js"></script>
+    <script type="module" src="/components/cards/v3/index.js"></script>
+    <script type="module" src="/components/inputs/v1/index.js"></script>
+    <script type="module" src="/components/inputs/v2/index.js"></script>
+    <script type="module" src="/components/textareas/v1/index.js"></script>
+    <style>
+      /* Global CSS rules applied on the main document */
+      :root,
+      html {
+        /* This activates the light-dark() evaluation engine globally */
+        color-scheme: light dark;
+      }
+
+      /* Explicitly bind the color-scheme state to your data attributes */
+      html[data-theme="light"] {
+        color-scheme: light;
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+      }
+
+      :root {
+        --bg-primary-light: #e4d9d9;
+        --text-primary-light: #1f1d1d;
+        --bg-secondary-dark: #333;
+        --text-secondary-dark: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--text-primary-light, #1f1d1d);
+      }
+
+      .nav-link:hover {
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <sample-header-v1 title="Sample App">
+      <img
+        slot="nav-logo"
+        src="/public/logo.jpg"
+        width="70"
+        height="70"
+        alt="Logo"
+      />
+      <button slot="nav-links" onclick="changeTheme()">change theme</button>
+      <a
+        slot="nav-links"
+        class="nav-link"
+        href="/"
+        onclick="
+          navigateTo('/');
+          return false;
+        "
+        >Home</a
+      >
+      <a
+        slot="nav-links"
+        class="nav-link"
+        href="/cards"
+        onclick="
+          navigateTo('/cards');
+          return false;
+        "
+        >Card</a
+      >
+      <a
+        slot="nav-links"
+        class="nav-link"
+        href="/forms"
+        onclick="
+          navigateTo('/forms');
+          return false;
+        "
+        >Form</a
+      >
+      <a
+        slot="nav-links"
+        class="nav-link"
+        href="/contact"
+        onclick="
+          navigateTo('/contact');
+          return false;
+        "
+        >Contact</a
+      >
+    </sample-header-v1>
+
+    <div
+      style="display: flex; gap: 24px; padding: 24px; justify-content: center"
+    >
+      <sample-input-v1
+        type="text"
+        label="Simple input"
+        required
+        placeholder="Simple input"
+        c-oninput="inputChangeHandler(event)"
+      ></sample-input-v1>
+      <sample-input-v1
+        type="text"
+        label="Input with icon"
+        placeholder="Input with icon"
+      >
+        <svg
+          slot="left-icon"
+          width="30px"
+          height="30px"
+          viewBox="0 0 1024 1024"
+          class="icon"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#000000"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M192 96c-17.6 0-32 14.4-32 32v768c0 17.6 14.4 32 32 32h640c17.6 0 32-14.4 32-32V128c0-17.6-14.4-32-32-32H192z m0-32h640c35.2 0 64 28.8 64 64v768c0 35.2-28.8 64-64 64H192c-35.2 0-64-28.8-64-64V128c0-35.2 28.8-64 64-64z"
+              fill="#050D42"
+            ></path>
+            <path
+              d="M576 512m-160 0a160 160 0 1 0 320 0 160 160 0 1 0-320 0Z"
+              fill="#2F4BFF"
+            ></path>
+            <path
+              d="M475.2 390.4c-4.8-48-22.4-86.4-57.6-123.2-6.4-6.4-6.4-16 0-22.4 6.4-6.4 16-6.4 22.4 0 43.2 43.2 62.4 89.6 67.2 145.6 57.6 3.2 94.4 16 126.4 48 30.4 30.4 43.2 65.6 46.4 116.8 49.6 3.2 92.8 22.4 134.4 62.4 6.4 6.4 6.4 16 0 22.4-6.4 6.4-16 6.4-22.4 0-33.6-33.6-68.8-49.6-110.4-52.8 0 9.6 0 19.2-1.6 28.8 0 3.2-3.2 43.2-3.2 52.8-1.6 17.6 0 32 1.6 43.2 1.6 14.4 6.4 24 12.8 30.4 6.4 6.4 6.4 16 0 22.4-6.4 6.4-16 6.4-22.4 0-11.2-11.2-19.2-28.8-20.8-49.6-1.6-14.4-1.6-28.8-1.6-49.6 0-11.2 3.2-49.6 3.2-52.8 0-9.6 1.6-17.6 1.6-27.2-8 0-16 1.6-24 1.6-9.6 1.6-67.2 11.2-81.6 12.8-24 1.6-41.6-3.2-56-16-9.6-9.6-14.4-22.4-16-38.4-1.6-12.8-1.6-27.2 1.6-49.6 0-4.8 3.2-25.6 3.2-27.2 1.6-11.2 1.6-20.8 1.6-28.8v-20.8h-22.4c-1.6 0-28.8 0-36.8 1.6H384c-40-1.6-68.8-11.2-88-30.4-6.4-6.4-6.4-16 0-22.4 6.4-6.4 16-6.4 22.4 0 12.8 12.8 33.6 19.2 67.2 20.8h33.6c8 0 35.2-1.6 36.8-1.6 4.8 3.2 12.8 3.2 19.2 3.2z m171.2 164.8c-3.2-41.6-12.8-70.4-36.8-94.4-24-24-54.4-35.2-102.4-38.4v22.4c0-8-8 83.2-6.4 99.2 1.6 9.6 3.2 14.4 8 19.2 4.8 4.8 14.4 8 30.4 6.4 12.8-1.6 68.8-11.2 80-11.2 9.6-1.6 19.2-3.2 27.2-3.2zM224 184c-9.6 0-16-6.4-16-16s6.4-16 16-16h192c9.6 0 16 6.4 16 16s-6.4 16-16 16H224zM216 736c-4.8 0-8-3.2-8-8s3.2-8 8-8h128c4.8 0 8 3.2 8 8s-3.2 8-8 8h-128z m0 48c-4.8 0-8-3.2-8-8s3.2-8 8-8h128c4.8 0 8 3.2 8 8s-3.2 8-8 8h-128z m0 48c-4.8 0-8-3.2-8-8s3.2-8 8-8h128c4.8 0 8 3.2 8 8s-3.2 8-8 8h-128z"
+              fill="#050D42"
+            ></path>
+            <path
+              d="M776 128c22.4 0 40 17.6 40 40S798.4 208 776 208 736 190.4 736 168 753.6 128 776 128z"
+              fill="#2F4BFF"
+            ></path>
+          </g>
+        </svg>
+      </sample-input-v1>
+      <sample-textarea-v1
+        label="Simple textarea"
+        placeholder="Simple textarea"
+        rows="4"
+        cols="40"
+        c-oninput="inputChangeHandler(event)"
+      ></sample-textarea-v1>
+    </div>
+
+    <div id="main-content"></div>
+
+    <script>
+      function inputChangeHandler(event) {
+        console.log("Input target:", event.target);
+        console.log("Input value changed:", event.target.value);
+      }
+
+      function changeTheme() {
+        const toggleButton = document.getElementById("theme-toggle");
+        const htmlElement = document.documentElement;
+
+        // Load saved theme or check system preference
+        const savedTheme = localStorage.getItem("theme");
+        const systemPrefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const initialTheme =
+          savedTheme || (systemPrefersDark ? "dark" : "light");
+
+        htmlElement.setAttribute("data-theme", initialTheme);
+        const currentTheme = htmlElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        htmlElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+
+      (function () {
+        const path = window.location.pathname;
+        navigateTo(path);
+      })();
+
+      function navigateTo(path) {
+        history.pushState(null, null, path);
+        window.dispatchEvent(new Event("location-changed"));
+
+        const mainContent = document.getElementById("main-content");
+
+        switch (path) {
+          case "/":
+            mainContent.innerHTML = "<home-view></home-view>";
+            break;
+          case "/cards":
+            mainContent.innerHTML = "<cards-view></cards-view>";
+            break;
+          case "/forms":
+            mainContent.innerHTML = "<h1>About Page</h1>";
+            break;
+          case "/contact":
+            mainContent.innerHTML = "<h1>Contact Page</h1>";
+            break;
+          default:
+            mainContent.innerHTML = "<h1>404 - Page Not Found</h1>";
+        }
+      }
+
+      window.customElements.define(
+        "home-view",
+        class extends HTMLElement {
+          connectedCallback() {
+            const shadow = this.attachShadow({ mode: "open" });
+            shadow.innerHTML = `
+                  <div
+                    style="
+                      display: flex;
+                      gap: 2rem;
+                      padding: 1rem;
+                      flex-wrap: wrap;
+                      align-items: center;
+                      justify-content: center;
+                    "
+                  >
+                    <h1>Home View</h1>
+                  </div>
+                `;
+          }
+        },
+      );
+
+      window.customElements.define(
+        "cards-view",
+        class extends HTMLElement {
+          connectedCallback() {
+            const shadow = this.attachShadow({ mode: "open" });
+            shadow.innerHTML = `
+                  <div
+            style="
+              display: flex;
+              gap: 2rem;
+              padding: 1rem;
+              flex-wrap: wrap;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <sample-card-v1
+              title="Sample Card"
+              description="This is a simple sample card."
+              detail="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+              ><img
+                slot="card-image"
+                src="/public/logo.jpg"
+                width="70"
+                height="70"
+                alt="Logo"
+                style="border-radius: 5px; object-fit: cover; object-position: center"
+            /></sample-card-v1>
+
+            <sample-card-v2
+              title="Sample Card"
+              description="This is a simple sample card."
+              detail="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              button-label="Click Me"
+            >
+              <img
+                slot="card-image"
+                src="/public/logo.jpg"
+                width="70"
+                height="70"
+                alt="Logo"
+                style="border-radius: 5px; object-fit: cover; object-position: center"
+              />
+            </sample-card-v2>
+
+            <sample-card-v3>
+              <div
+                slot="card-header"
+                style="display: flex; gap: 12px; align-items: center; justify-content: space-between"
+              >
+                <h2 class="text-lg font-bold">Sample Card</h2>
+                <img src="/public/logo.jpg" width="70" height="70" alt="Logo" />
+              </div>
+              <div
+                slot="card-body"
+                style="display: flex; gap: 12px; align-items: center; justify-content: space-between"
+              >
+                <p class="text-tertiary-light text-md">
+                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+              </div>
+              <div
+                slot="card-footer"
+                style="display: flex; gap: 12px; align-items: center; justify-content: space-between"
+              >
+                <button
+                  type="button"
+                  style="
+                    display: block;
+                    flex: 1;
+                    border-radius: 10px;
+                    padding: 12px;
+                    cursor: pointer;
+                    font-family: inherit;
+                  "
+                  onclick="alert('Button 1 clicked!')"
+                >
+                  Click Me 1
+                </button>
+                <button
+                  type="button"
+                  style="
+                    display: block;
+                    flex: 1;
+                    border-radius: 10px;
+                    padding: 12px;
+                    cursor: pointer;
+                    font-family: inherit;
+                  "
+                  onclick="alert('Button 2 clicked!')"
+                >
+                  Click Me 2
+                </button>
+              </div>
+            </sample-card-v3>
+          </div>
+                `;
+          }
+        },
+      );
+    </script>
+  </body>
+</html>

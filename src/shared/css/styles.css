@@ -1,0 +1,287 @@
+:host {
+  /* Inherit the global color-scheme state (html/body) seamlessly */
+  color-scheme: inherit;
+
+  /* ==========================================
+     1. FALLBACK DEFINITIONS (Component Defaults)
+     ========================================== */
+  /* Background Fallbacks */
+  --fallback-bg-primary-light: #a8abaf;
+  --fallback-bg-secondary-dark: #2c3033;
+
+  /* Typography Fallbacks */
+  --fallback-text-primary-light: #1f1f1f;
+  --fallback-text-primary-dark: #f5f5f5;
+  --fallback-text-secondary-light: #534f4f;
+  --fallback-text-secondary-dark: #d6c5c5;
+  --fallback-text-accent: #ff4081;
+
+  /* Contrast Utilities Fallbacks */
+  --fallback-text-contrast-high-light: #111111;
+  --fallback-text-contrast-high-dark: #ffffff;
+  --fallback-text-contrast-muted-light: #595959;
+  --fallback-text-contrast-muted-dark: #a3a3a3;
+  --fallback-border-contrast-low-light: #e4e4e7;
+  --fallback-border-contrast-low-dark: #27272a;
+  --fallback-border-contrast-medium-light: #a1a1aa;
+  --fallback-border-contrast-medium-dark: #52525b;
+  --fallback-border-contrast-high-light: #27272a;
+  --fallback-border-contrast-high-dark: #e4e4e7;
+  --fallback-overlay-bg-light: rgba(0, 0, 0, 0.4);
+  --fallback-overlay-bg-dark: rgba(0, 0, 0, 0.7);
+
+  /* Core Surface Layers */
+  --fallback-bg-canvas-light: #f8fafc;
+  --fallback-bg-canvas-dark: #0f172a;
+  --fallback-bg-surface-light: #ffffff;
+  --fallback-bg-surface-dark: #1e293b;
+  --fallback-bg-subtle-light: #f1f5f9;
+  --fallback-bg-subtle-dark: #334155;
+
+  /* Dynamic Contrast Layer Fallbacks (The Inversion Engine) */
+  --fallback-bg-contrast-light: #1e293b; /* Dark background for light mode */
+  --fallback-bg-contrast-dark: #ffffff; /* White background for dark mode */
+  --fallback-text-on-contrast-light: #ffffff; /* Light text to read on dark pop background */
+  --fallback-text-on-contrast-dark: #0f172a; /* Dark text to read on white pop background */
+
+  /* Decorative Accents */
+  --fallback-bg-accent-light: #ff4081;
+  --fallback-bg-accent-dark: #ff4081;
+  --fallback-text-on-accent-light: #ffffff;
+  --fallback-text-on-accent-dark: #ffffff;
+  --fallback-bg-tint-light: rgba(255, 64, 129, 0.08);
+  --fallback-bg-tint-dark: rgba(255, 64, 129, 0.15);
+  --fallback-bg-hover-overlay-light: rgba(0, 0, 0, 0.04);
+  --fallback-bg-hover-overlay-dark: rgba(255, 255, 255, 0.06);
+
+  /* ==========================================
+     2. DYNAMIC LIGHT-DARK ENGINE TOKENS
+     ========================================== */
+  /* Main Adaptive Structural Tokens */
+  --bg-primary: light-dark(
+    var(--bg-primary-light, var(--fallback-bg-primary-light)),
+    var(--bg-secondary-dark, var(--fallback-bg-secondary-dark))
+  );
+
+  --text-primary: light-dark(
+    var(--text-primary-light, var(--fallback-text-primary-light)),
+    var(--text-primary-dark, var(--fallback-text-primary-dark))
+  );
+
+  --text-secondary: light-dark(
+    var(--text-secondary-light, var(--fallback-text-secondary-light)),
+    var(--text-secondary-dark, var(--fallback-text-secondary-dark))
+  );
+
+  --text-accent: var(--custom-text-accent, var(--fallback-text-accent));
+
+  /* Structural Structural Surfaces */
+  --bg-canvas: light-dark(
+    var(--bg-canvas-light, var(--fallback-bg-canvas-light)),
+    var(--bg-canvas-dark, var(--fallback-bg-canvas-dark))
+  );
+
+  --bg-surface: light-dark(
+    var(--bg-surface-light, var(--fallback-bg-surface-light)),
+    var(--bg-surface-dark, var(--fallback-bg-surface-dark))
+  );
+
+  --bg-subtle: light-dark(
+    var(--bg-subtle-light, var(--fallback-bg-subtle-light)),
+    var(--bg-subtle-dark, var(--fallback-bg-subtle-dark))
+  );
+
+  /* --- Relative Contrast Engine Tokens --- */
+  --bg-primary-contrast: light-dark(
+    var(--bg-contrast-light, var(--fallback-bg-contrast-light)),
+    var(--bg-contrast-dark, var(--fallback-bg-contrast-dark))
+  );
+
+  --text-on-contrast: light-dark(
+    var(--text-on-contrast-light, var(--fallback-text-on-contrast-light)),
+    var(--text-on-contrast-dark, var(--fallback-text-on-contrast-dark))
+  );
+
+  /* Contrast-Specific Adaptive Accent Tokens */
+  --text-contrast-high: light-dark(
+    var(--text-contrast-high-light, var(--fallback-text-contrast-high-light)),
+    var(--text-contrast-high-dark, var(--fallback-text-contrast-high-dark))
+  );
+
+  --text-contrast-muted: light-dark(
+    var(--text-contrast-muted-light, var(--fallback-text-contrast-muted-light)),
+    var(--text-contrast-muted-dark, var(--fallback-text-contrast-muted-dark))
+  );
+
+  --border-contrast-low: light-dark(
+    var(--border-contrast-low-light, var(--fallback-border-contrast-low-light)),
+    var(--border-contrast-low-dark, var(--fallback-border-contrast-low-dark))
+  );
+
+  --border-contrast-medium: light-dark(
+    var(--border-contrast-medium-light, var(--fallback-border-contrast-medium-light)),
+    var(--border-contrast-medium-dark, var(--fallback-border-contrast-medium-dark))
+  );
+
+  --border-contrast-high: light-dark(
+    var(--border-contrast-high-light, var(--fallback-border-contrast-high-light)),
+    var(--border-contrast-high-dark, var(--fallback-border-contrast-high-dark))
+  );
+
+  --overlay-bg: light-dark(
+    var(--overlay-bg-light, var(--fallback-overlay-bg-light)),
+    var(--overlay-bg-dark, var(--fallback-overlay-bg-dark))
+  );
+
+  --bg-accent: light-dark(
+    var(--bg-accent-light, var(--fallback-bg-accent-light)),
+    var(--bg-accent-dark, var(--fallback-bg-accent-dark))
+  );
+
+  --text-on-accent: light-dark(
+    var(--text-on-accent-light, var(--fallback-text-on-accent-light)),
+    var(--text-on-accent-dark, var(--fallback-text-on-accent-dark))
+  );
+
+  --bg-tint: light-dark(
+    var(--bg-tint-light, var(--fallback-bg-tint-light)),
+    var(--bg-tint-dark, var(--fallback-bg-tint-dark))
+  );
+
+  --bg-hover-overlay: light-dark(
+    var(--bg-hover-overlay-light, var(--fallback-bg-hover-overlay-light)),
+    var(--bg-hover-overlay-dark, var(--fallback-bg-hover-overlay-dark))
+  );
+}
+
+/* ==========================================
+   3. OPTIONAL LOCAL STATE OVERRIDES
+   ========================================== */
+:host([data-theme="light"]) {
+  color-scheme: light;
+}
+:host([data-theme="dark"]) {
+  color-scheme: dark;
+}
+
+/* ==========================================
+   4. UTILITY CLASSES (Adaptive & Reusable)
+   ========================================== */
+
+/* --- Standard Structural Backgrounds --- */
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+.bg-canvas {
+  background-color: var(--bg-canvas);
+}
+.bg-surface {
+  background-color: var(--bg-surface);
+}
+.bg-subtle {
+  background-color: var(--bg-subtle);
+}
+
+/* --- High Visibility Contrast Pop Background --- */
+/* This class acts as a visual punch against standard layout fields */
+.bg-contrast {
+  background-color: var(--bg-primary-contrast);
+  color: var(--text-on-contrast);
+}
+
+/* Decorative Accent Panels */
+.bg-accent {
+  background-color: var(--bg-accent);
+  color: var(--text-on-accent);
+}
+
+.bg-tint {
+  background-color: var(--bg-tint);
+  color: var(--text-accent);
+}
+
+.hoverable-pop {
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+.hoverable-pop:hover {
+  background-color: var(--bg-hover-overlay);
+}
+
+/* --- Core Text Palette --- */
+.text-primary {
+  color: var(--text-primary);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+.text-accent {
+  color: var(--text-accent);
+}
+
+/* --- Contrast Utilities --- */
+.text-high {
+  color: var(--text-contrast-high);
+}
+.text-muted {
+  color: var(--text-contrast-muted);
+}
+.border-low {
+  border: 1px solid var(--border-contrast-low);
+}
+.border-medium {
+  border: 1px solid var(--border-contrast-medium);
+}
+.border-high {
+  border: 1px solid var(--border-contrast-high);
+}
+.overlay {
+  background-color: var(--overlay-bg);
+}
+
+/* --- Accessibility Focus Utilities --- */
+.interactive-element {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.2s ease;
+}
+.interactive-element:focus-visible {
+  outline-color: var(--text-contrast-high);
+}
+
+/* --- Typographic Sizing & Hierarchy --- */
+.text-sm {
+  font-size: var(--text-small, 14px);
+}
+.text-md {
+  font-size: var(--text-medium, 16px);
+}
+.text-lg {
+  font-size: var(--text-large, 24px);
+}
+
+/* --- Typographic Weight & Styles --- */
+.font-bold {
+  font-weight: var(--font-bold, bold);
+}
+.font-semibold {
+  font-weight: var(--font-semi-bold, 600);
+}
+.font-italic {
+  font-style: var(--font-italic, italic);
+}
+.font-bold-italic {
+  font-weight: var(--font-bold, bold);
+  font-style: var(--font-italic, italic);
+}
+
+/* --- Structural Box Shadows --- */
+.shadow-sm {
+  box-shadow: var(--box-shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+.shadow-md {
+  box-shadow: var(--box-shadow-md, 0 4px 8px rgba(0, 0, 0, 0.1));
+}
+.shadow-lg {
+  box-shadow: var(--box-shadow-lg, 0 8px 16px rgba(0, 0, 0, 0.1));
+}

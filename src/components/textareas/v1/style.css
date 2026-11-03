@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+label {
+  white-space: pre;
+}
+
+.required {
+  color: red;
+}
+
+[part="textarea"] {
+  border-radius: 5px;
+  padding: 4px 8px;
+  min-height: 120px;
+  min-width: 240px;
+  max-width: 100%;
+  flex: 1;
+  resize: vertical;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+[part="textarea"]:hover {
+  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
+}
+[part="textarea"]:focus {
+  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
+}

@@ -78,6 +78,13 @@ export class Radio extends BaseRadioElement {
         new Event("change", { composed: true, bubbles: true }),
       );
     });
+
+    // init checked state
+    if (this.checked) {
+      this._radio.dispatchEvent(
+        new Event("change", { composed: true, bubbles: true }),
+      );
+    }
   }
 }
 

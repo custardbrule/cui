@@ -165,19 +165,21 @@
         c-oninput="inputChangeHandler(event)"
       ></sample-textarea-v1>
 
-      <div>
+      <form onsubmit="submitRad(event)">
         <div role="radiogroup" aria-labelledby="plan-label">
           <span id="plan-label">Plan</span>
           <sample-radio-v1
             name="plan"
             value="free"
             label="Free"
+            checked
             required
           ></sample-radio-v1>
           <sample-radio-v1
             name="plan"
-            value="pro"
+            value="Pro"
             label="Pro"
+            checked
           ></sample-radio-v1>
           <sample-radio-v1
             name="plan"
@@ -185,7 +187,7 @@
             label="Team"
             disabled
           ></sample-radio-v1>
-          <button type="submit" onclick="submitRad(event)">Submit</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>

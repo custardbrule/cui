@@ -4,22 +4,6 @@ import stylesheet from "./style.css" with { type: "css" };
 import { TEXTAREA_FORWARDED, HANDLER_ATTRS } from "@/shared/constants";
 import { esc } from "@/shared/utils";
 
-const HOST_HANDLED = new Set(["name", "value"]);
-const SYNCED = [...TEXTAREA_FORWARDED, ...HANDLER_ATTRS].filter(
-  (n) => !HOST_HANDLED.has(n),
-);
-
-/**
- * Multi-line text input with a label.
- *
- * @tagname sample-textarea-v1
- * @attr {string} label - Text shown above the textarea.
- * @attr {string} name - Name used when the form is submitted.
- * @attr {string} value - Initial value (use the `value` property for live updates).
- * @attr {boolean} required - Marks the field required and shows an asterisk.
- * @attr {number} rows - Visible rows.
- * @csspart textarea - The inner `<textarea>`.
- */
 export class Textarea extends HTMLElement {
   static formAssociated = true;
   private internals = this.attachInternals();
@@ -58,7 +42,7 @@ export class Textarea extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["label", "value", ...SYNCED];
+    return ["label", "value", ...TEXTAREA_FORWARDED, ...HANDLER_ATTRS];
   }
 
   private build() {
@@ -100,7 +84,8 @@ export class Textarea extends HTMLElement {
     </div>`;
 
     this._input = root.querySelector<HTMLTextAreaElement>("[part=textarea]")!;
-    for (const name of SYNCED) this.syncAttributeToChild(name);
+    for (const name of Textarea.observedAttributes)
+      this.syncAttributeToChild(name);
 
     // keep typed text across re-renders, else use the value attribute
     this._input.value = typed ?? this.getAttribute("value") ?? "";

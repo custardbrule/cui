@@ -53,16 +53,16 @@ class BaseRadioElement extends HTMLElement {
     return this.internals.labels;
   }
 
-  get willValidate() {
-    return this.internals.willValidate;
-  }
-
   //----integrate form----
   get validity() {
     return this.internals.validity;
   }
   get validationMessage() {
     return this.internals.validationMessage;
+  }
+
+  get willValidate() {
+    return this.internals.willValidate;
   }
 
   checkValidity() {

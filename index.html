@@ -106,12 +106,25 @@
       >
     </sample-header-v1>
 
-    <div
-      style="display: flex; gap: 24px; padding: 24px; justify-content: center"
+    <form
+      style="
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 24px;
+        align-items: center;
+      "
+      onsubmit="submitRad(event)"
     >
-      <form
-        style="display: flex; gap: 24px; padding: 24px; justify-content: center"
-        onsubmit="submitRad(event)"
+      <span>--------------------Input-------------------</span>
+      <div
+        style="
+          display: flex;
+          gap: 24px;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+        "
       >
         <sample-input-v1
           name="inp-1"
@@ -171,31 +184,43 @@
           rows="4"
           cols="40"
         ></sample-textarea-v1>
-        <div role="radiogroup" aria-labelledby="plan-label">
-          <span id="plan-label">Plan</span>
-          <sample-radio-v1
-            name="plan"
-            value="free"
-            label="Free"
-            checked
-            required
-          ></sample-radio-v1>
-          <sample-radio-v1
-            name="plan"
-            value="Pro"
-            label="Pro"
-            checked
-          ></sample-radio-v1>
-          <sample-radio-v1
-            name="plan"
-            value="team"
-            label="Team"
-            disabled
-          ></sample-radio-v1>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+      </div>
+      <span>--------------------Radio-------------------</span>
+      <div
+        role="radiogroup"
+        aria-labelledby="plan-label"
+        style="
+          display: flex;
+          gap: 24px;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <sample-radio-v1
+          name="plan"
+          value="free"
+          label="Free"
+          checked
+          required
+        ></sample-radio-v1>
+        <sample-radio-v1
+          name="plan"
+          value="Pro"
+          label="Pro"
+          checked
+        ></sample-radio-v1>
+        <sample-radio-v1
+          name="plan"
+          value="team"
+          label="Team"
+          disabled
+        ></sample-radio-v1>
+      </div>
+      <button style="padding: 2px 4px; border-radius: 2px" type="submit">
+        Submit
+      </button>
+    </form>
 
     <div id="main-content"></div>
 

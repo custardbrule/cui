@@ -2,7 +2,7 @@ import sheet from "@/shared/css/styles.css" with { type: "css" };
 import presetsheet from "@/shared/css/preset.css" with { type: "css" };
 import radiosheet from "@/shared/css/radio.css" with { type: "css" };
 import stylesheet from "./style.css" with { type: "css" };
-import { BaseRadioElement } from "@/components/radios/base";
+import { BaseRadioElement, type SyncEvent } from "@/components/radios/base";
 
 export class Radio extends BaseRadioElement {
   render() {
@@ -33,7 +33,6 @@ export class Radio extends BaseRadioElement {
     </div>`;
 
     this.bindings();
-    this.sync();
   }
 
   connectedCallback() {
@@ -53,26 +52,31 @@ export class Radio extends BaseRadioElement {
   }
 
   //----integrate form----
-  sync() {
-    const checked = this.radio?.checked ?? false;
-    this._internals.setFormValue(checked ? this.value : null);
-  }
-
   private bindings() {
     this._radio = this._root.querySelector("input[type=radio]")!;
+
+    this._radio.addEventListener("sync", (event: Event) => {
+      const checked = this._radio!.value === (event as SyncEvent).detail.value;
+      this._radio!.checked = checked;
+      this._internals.setFormValue(checked ? this.value : null);
+    });
+
     this._radio.addEventListener("change", (event) => {
       const scope = (this._internals.form ?? this.getRootNode()) as ParentNode;
       scope
         .querySelectorAll<Radio>(`[c-radio][name="${this.name}"]`)
-        .forEach((input: BaseRadioElement) => {
-          if (input.value !== this.value) {
-            input.radio!.checked = false;
-          }
-
-          const checked = input.checked ?? false;
-          input.internals.setFormValue(checked ? input.value : null);
+        .forEach((ele) => {
+          ele.radio?.dispatchEvent(
+            new CustomEvent("sync", {
+              bubbles: true,
+              composed: true,
+              detail: { value: this.value },
+            }),
+          );
         });
-      this.dispatchEvent(new Event("change", { bubbles: true }));
+      this.dispatchEvent(
+        new Event("change", { composed: true, bubbles: true }),
+      );
     });
   }
 }

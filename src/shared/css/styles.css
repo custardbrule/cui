@@ -119,12 +119,21 @@
   );
 
   --border-contrast-medium: light-dark(
-    var(--border-contrast-medium-light, var(--fallback-border-contrast-medium-light)),
-    var(--border-contrast-medium-dark, var(--fallback-border-contrast-medium-dark))
+    var(
+      --border-contrast-medium-light,
+      var(--fallback-border-contrast-medium-light)
+    ),
+    var(
+      --border-contrast-medium-dark,
+      var(--fallback-border-contrast-medium-dark)
+    )
   );
 
   --border-contrast-high: light-dark(
-    var(--border-contrast-high-light, var(--fallback-border-contrast-high-light)),
+    var(
+      --border-contrast-high-light,
+      var(--fallback-border-contrast-high-light)
+    ),
     var(--border-contrast-high-dark, var(--fallback-border-contrast-high-dark))
   );
 

@@ -12,6 +12,7 @@
     <script type="module" src="/components/inputs/v1/index.js"></script>
     <script type="module" src="/components/inputs/v2/index.js"></script>
     <script type="module" src="/components/textareas/v1/index.js"></script>
+    <script type="module" src="/components/radios/v1/index.js"></script>
     <style>
       /* Global CSS rules applied on the main document */
       :root,
@@ -163,11 +164,41 @@
         cols="40"
         c-oninput="inputChangeHandler(event)"
       ></sample-textarea-v1>
+
+      <div>
+        <div role="radiogroup" aria-labelledby="plan-label">
+          <span id="plan-label">Plan</span>
+          <sample-radio-v1
+            name="plan"
+            value="free"
+            label="Free"
+            required
+          ></sample-radio-v1>
+          <sample-radio-v1
+            name="plan"
+            value="pro"
+            label="Pro"
+          ></sample-radio-v1>
+          <sample-radio-v1
+            name="plan"
+            value="team"
+            label="Team"
+            disabled
+          ></sample-radio-v1>
+          <button type="submit" onclick="submitRad(event)">Submit</button>
+        </div>
+      </form>
     </div>
 
     <div id="main-content"></div>
 
     <script>
+      function submitRad(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        console.log(Object.fromEntries(formData));
+      }
+
       function inputChangeHandler(event) {
         console.log("Input target:", event.target);
         console.log("Input value changed:", event.target.value);

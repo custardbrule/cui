@@ -2,9 +2,7 @@ import sheet from "@/shared/css/styles.css" with { type: "css" };
 import presetsheet from "@/shared/css/preset.css" with { type: "css" };
 import stylesheet from "./style.css" with { type: "css" };
 import { TEXTAREA_FORWARDED, HANDLER_ATTRS } from "@/shared/constants";
-
-const esc = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+import { esc } from "@/shared/utils";
 
 const HOST_HANDLED = new Set(["name", "value"]);
 const SYNCED = [...TEXTAREA_FORWARDED, ...HANDLER_ATTRS].filter(
@@ -64,7 +62,9 @@ export class Textarea extends HTMLElement {
   }
 
   private build() {
-    const root = this.attachShadow({ mode: "open", delegatesFocus: true });
+    const root =
+      this.shadowRoot ||
+      this.attachShadow({ mode: "open", delegatesFocus: true });
 
     root.addEventListener("input", () => this.syncForm());
     root.addEventListener("change", () => {
@@ -75,7 +75,9 @@ export class Textarea extends HTMLElement {
   }
 
   render() {
-    const root = this.shadowRoot!;
+    const root =
+      this.shadowRoot ||
+      this.attachShadow({ mode: "open", delegatesFocus: true });
     const label = this.getAttribute("label");
     const required = this.hasAttribute("required");
 

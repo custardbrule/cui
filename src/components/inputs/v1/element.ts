@@ -2,9 +2,7 @@ import sheet from "@/shared/css/styles.css" with { type: "css" };
 import presetsheet from "@/shared/css/preset.css" with { type: "css" };
 import stylesheet from "./style.css" with { type: "css" };
 import { FORWARDED, HANDLER_ATTRS } from "@/shared/constants";
-
-const esc = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+import { esc } from "@/shared/utils";
 
 const HOST_HANDLED = new Set(["name", "value"]);
 const SYNCED = [...FORWARDED, ...HANDLER_ATTRS].filter(

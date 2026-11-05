@@ -13,6 +13,7 @@
     <script type="module" src="/components/inputs/v2/index.js"></script>
     <script type="module" src="/components/textareas/v1/index.js"></script>
     <script type="module" src="/components/radios/v1/index.js"></script>
+    <script type="module" src="/components/checkboxes/v1/index.js"></script>
     <style>
       /* Global CSS rules applied on the main document */
       :root,
@@ -217,6 +218,29 @@
           disabled
         ></sample-radio-v1>
       </div>
+      <span>--------------------Checkbox-------------------</span>
+      <div
+        role="radiogroup"
+        aria-labelledby="plan-label"
+        style="
+          display: flex;
+          gap: 24px;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <sample-checkbox-v1
+          name="check-v1"
+          value="no.1"
+          label="No.1"
+        ></sample-checkbox-v1>
+        <sample-checkbox-v1
+          name="check-v1"
+          value="no.2"
+          label="No.2"
+        ></sample-checkbox-v1>
+      </div>
       <button style="padding: 2px 4px; border-radius: 2px" type="submit">
         Submit
       </button>
@@ -225,10 +249,18 @@
     <div id="main-content"></div>
 
     <script>
+      function formToObject(formData) {
+        const out = {};
+        for (const key of new Set(formData.keys())) {
+          const all = formData.getAll(key);
+          out[key] = all.length > 1 ? all : all[0];
+        }
+        return out;
+      }
+
       function submitRad(event) {
         event.preventDefault();
-        const formData = new FormData(event.target);
-        console.log(Object.fromEntries(formData));
+        console.log(formToObject(new FormData(event.target)));
       }
 
       function inputChangeHandler(event) {

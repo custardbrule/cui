@@ -64,7 +64,7 @@ export class Radio extends BaseRadioElement {
     this._radio.addEventListener("change", (event) => {
       const scope = (this._internals.form ?? this.getRootNode()) as ParentNode;
       scope
-        .querySelectorAll<Radio>(`[c-radio][name="${this.name}"]`)
+        .querySelectorAll<BaseRadioElement>(`[c-radio][name="${this.name}"]`)
         .forEach((ele) => {
           ele.radio?.dispatchEvent(
             new CustomEvent("sync", {

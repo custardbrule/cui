@@ -3,16 +3,26 @@ import fs from "node:fs";
 import esbuild from "rollup-plugin-esbuild";
 import resolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
+import * as sass from "sass";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { transform } from "esbuild";
 
 export const srcDir = path.resolve("src");
 export const sharedDir = path.join(srcDir, "shared");
 export const distDir = path.resolve("dist");
 
+export const toSheet = async (css) => {
+  const { code } = await transform(css, { loader: "css", minify: true });
+  return `const sheet = new CSSStyleSheet();
+          sheet.replaceSync(${JSON.stringify(code.trim())});
+          export default sheet;`;
+};
+
 // src/shared/styles.css -> <abs>/dist/shared/styles.js
 export const toDist = (abs) =>
   path
     .join(distDir, path.relative(srcDir, abs))
-    .replace(/\.(ts|css|svg)$/, ".js");
+    .replace(/\.(ts|css|scss|svg)$/, ".js");
 
 // src/input/v1/element.ts -> <abs>/dist/input/v1
 export const toOutDir = (file) =>
@@ -33,7 +43,7 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
       }
 
       // not css/html: only the alias needs help (e.g. "@/shared/util")
-      if (!/\.(css|html|svg)$/.test(abs)) {
+      if (!/\.(css|scss|html|svg)$/.test(abs)) {
         return source.startsWith("@/")
           ? this.resolve(abs, importer, { skipSelf: true })
           : null;
@@ -43,7 +53,7 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
       if (
         externalizeShared &&
         outDir &&
-        /\.(css|svg)$/.test(abs) &&
+        /\.(css|scss|svg)$/.test(abs) &&
         abs.startsWith(sharedDir + path.sep)
       ) {
         let rel = path.relative(outDir, toDist(abs)).split(path.sep).join("/");
@@ -63,6 +73,24 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
           sheet.replaceSync(${JSON.stringify(css)});
           export default sheet;
         `;
+      }
+      if (id.endsWith(".scss")) {
+        const result = sass.compile(id, {
+          style: "compressed",
+          loadPaths: [srcDir],
+          importers: [
+            {
+              findFileUrl(url) {
+                if (!url.startsWith("@/")) return null;
+                return pathToFileURL(path.join(srcDir, url.slice(2)));
+              },
+            },
+          ],
+        });
+        for (const u of result.loadedUrls) {
+          if (u.protocol === "file:") this.addWatchFile(fileURLToPath(u));
+        }
+        return toSheet(result.css);
       }
       if (id.endsWith(".html")) {
         this.addWatchFile(id);

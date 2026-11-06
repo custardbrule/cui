@@ -1,7 +1,7 @@
-import sheet from "@/shared/css/styles.css" with { type: "css" };
-import presetsheet from "@/shared/css/preset.css" with { type: "css" };
-import radiosheet from "@/shared/css/radio.css" with { type: "css" };
-import stylesheet from "./style.css" with { type: "css" };
+import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import radiosheet from "@/shared/css/radio.scss" with { type: "css" };
+import stylesheet from "./style.scss" with { type: "css" };
 import { BaseRadioElement, type SyncEvent } from "@/components/radios/base";
 
 export class Radio extends BaseRadioElement {

@@ -17,6 +17,7 @@
   ],
   "sideEffects": true,
   "scripts": {
+    "new": "node scripts/new.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "clean": "rimraf dist",

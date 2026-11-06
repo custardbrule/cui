@@ -79,7 +79,7 @@ export class Select extends BaseSelectElement {
     oldValue: string | null,
     newValue: string | null,
   ) {
-    if (oldValue === newValue || !this._select) return;
+    if (oldValue === newValue) return;
     this.render();
   }
 

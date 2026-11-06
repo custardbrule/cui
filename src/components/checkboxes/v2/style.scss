@@ -1,0 +1,44 @@
+.toggle-checkbox-wrapper {
+  display: inline-flex;
+  align-items: center; // Ensures the outer component sits perfectly on the text baseline
+}
+
+.slider-btn {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  background-color: var(--bg-primary); // Default track background state color
+  border-radius: 50px;
+  outline: 1px solid var(--bg-accent);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+
+  /* Handle Circle Knob */
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--bg-accent); // Default circle knob state color
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
+    // Calculates a precise 2px inset margin on all sides: (24px track - 20px circle) / 2 = 2px
+    transform: translate(2px, 2px);
+  }
+}
+
+.toggle-checkbox {
+  /* Keep native input hidden out of sight */
+  display: none;
+
+  /* Handle circle slide when activated/checked */
+  &:checked ~ .slider-btn:after {
+    // 2px base margin + 24px shift distance = 26px total translation stop point
+    transform: translate(26px, 2px);
+  }
+}

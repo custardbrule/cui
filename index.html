@@ -14,6 +14,7 @@
     <script type="module" src="/components/textareas/v1/index.js"></script>
     <script type="module" src="/components/radios/v1/index.js"></script>
     <script type="module" src="/components/checkboxes/v1/index.js"></script>
+    <script type="module" src="/components/checkboxes/v2/index.js"></script>
     <script type="module" src="/components/selects/v1/index.js"></script>
     <style>
       /* Global CSS rules applied on the main document */
@@ -135,6 +136,7 @@
           value="no.1"
           required
           placeholder="Simple input"
+          minlength="6"
           c-onchange="inputChangeHandler(event)"
         ></sample-input-v1>
         <sample-input-v1
@@ -206,17 +208,11 @@
           checked
           required
         ></sample-radio-v1>
-        <sample-radio-v1
-          name="plan"
-          value="Pro"
-          label="Pro"
-          checked
-        ></sample-radio-v1>
+        <sample-radio-v1 name="plan" value="Pro" label="Pro"></sample-radio-v1>
         <sample-radio-v1
           name="plan"
           value="team"
           label="Team"
-          disabled
         ></sample-radio-v1>
       </div>
       <span>--------------------Checkbox-------------------</span>
@@ -233,15 +229,20 @@
       >
         <sample-checkbox-v1
           name="check-v1"
-          value="no.1"
-          label="No.1"
+          value="no.1-v1"
+          label="No.1-v1"
           checked
         ></sample-checkbox-v1>
         <sample-checkbox-v1
           name="check-v1"
-          value="no.2"
-          label="No.2"
+          value="no.2-v2"
+          label="No.2-v2"
         ></sample-checkbox-v1>
+        <sample-checkbox-v2
+          name="check-v2"
+          value="no.1-v2"
+          label="No.1-v2"
+        ></sample-checkbox-v2>
       </div>
       <span>--------------------select-------------------</span>
       <div

@@ -62,6 +62,12 @@ export class Checkbox extends BaseCheckboxElement {
         new Event("change", { composed: true, bubbles: true }),
       );
     });
+
+    if (this._checkbox.checked) {
+      this._checkbox.dispatchEvent(
+        new Event("change", { composed: true, bubbles: true }),
+      );
+    }
   }
 }
 

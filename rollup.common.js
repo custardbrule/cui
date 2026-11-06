@@ -10,7 +10,9 @@ export const distDir = path.resolve("dist");
 
 // src/shared/styles.css -> <abs>/dist/shared/styles.js
 export const toDist = (abs) =>
-  path.join(distDir, path.relative(srcDir, abs)).replace(/\.(ts|css)$/, ".js");
+  path
+    .join(distDir, path.relative(srcDir, abs))
+    .replace(/\.(ts|css|svg)$/, ".js");
 
 // src/input/v1/element.ts -> <abs>/dist/input/v1
 export const toOutDir = (file) =>
@@ -31,7 +33,7 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
       }
 
       // not css/html: only the alias needs help (e.g. "@/shared/util")
-      if (!/\.(css|html)$/.test(abs)) {
+      if (!/\.(css|html|svg)$/.test(abs)) {
         return source.startsWith("@/")
           ? this.resolve(abs, importer, { skipSelf: true })
           : null;
@@ -41,12 +43,12 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
       if (
         externalizeShared &&
         outDir &&
-        abs.endsWith(".css") &&
+        /\.(css|svg)$/.test(abs) &&
         abs.startsWith(sharedDir + path.sep)
       ) {
         let rel = path.relative(outDir, toDist(abs)).split(path.sep).join("/");
         if (!rel.startsWith(".")) rel = "./" + rel;
-        return { id: rel, external: "absolute" }; // "absolute" = emit the id untouched
+        return { id: rel, external: "absolute" };
       }
 
       return abs; // everything else gets inlined by load()
@@ -65,6 +67,16 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
       if (id.endsWith(".html")) {
         this.addWatchFile(id);
         return `export default ${JSON.stringify(fs.readFileSync(id, "utf8"))};`;
+      }
+      if (id.endsWith(".svg")) {
+        this.addWatchFile(id);
+        const svg = fs
+          .readFileSync(id, "utf8")
+          .replace(/<\?xml[\s\S]*?\?>/g, "")
+          .replace(/<!--[\s\S]*?-->/g, "")
+          .replace(/>\s+</g, "><")
+          .trim();
+        return `export default ${JSON.stringify(svg)};`;
       }
       return null;
     },

@@ -13,7 +13,7 @@ label {
 }
 
 [part="textarea"] {
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 4px 8px;
   min-height: 120px;
   min-width: 240px;

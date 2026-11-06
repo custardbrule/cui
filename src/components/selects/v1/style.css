@@ -1,0 +1,76 @@
+[part="display"] {
+  border-radius: 4px;
+  padding: 4px 8px;
+  font: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.required {
+  color: red;
+}
+
+.tag {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  padding: 0px 6px;
+  border-radius: 6px;
+}
+
+.tag > span:hover {
+  cursor: pointer;
+}
+
+/* 1. Establish the anchor context on the parent container */
+.dropdown-container {
+  position: relative; /* Lock the floating element bounds here */
+  min-width: 240px;
+}
+
+/* 2. Configure the Dropdown to float smoothly over content */
+.dropdown-container [part="select"] {
+  position: absolute;
+  top: 100%; /* Positions the menu directly below the display trigger */
+  left: 0;
+  width: 100%; /* Matches the exact width of the parent component box */
+  z-index: 50; /* Ensures it sits on top of text/buttons underneath */
+  box-sizing: border-box;
+
+  /* Retain your smooth animations */
+  opacity: 0;
+  transform: translateY(-4px) scale(0.98);
+  max-height: 0;
+  pointer-events: none;
+
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    max-height 200ms ease-in-out,
+    padding 200ms ease-in-out;
+
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: var(
+    --dropdown-bg,
+    #ffffff
+  ); /* Ensure text below doesn't bleed through */
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 3. Reveal menu seamlessly on component interaction */
+.dropdown-container:focus-within [part="select"] {
+  opacity: 1;
+  transform: translateY(4px) scale(1); /* Minor gap spacing push down */
+  max-height: 200px;
+  pointer-events: auto;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* 4. Decorative accent focus indicator boundaries */
+.dropdown-container:focus-within [part="display"] {
+  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
+}

@@ -7,7 +7,9 @@
      ========================================== */
   /* Background Fallbacks */
   --fallback-bg-primary-light: #a8abaf;
-  --fallback-bg-secondary-dark: #2c3033;
+  --fallback-bg-primary-dark: #2c3033;
+  --fallback-bg-secondary-light: #a2acad;
+  --fallback-bg-secondary-dark: #3f4b59;
 
   /* Typography Fallbacks */
   --fallback-text-primary-light: #1f1f1f;
@@ -60,6 +62,11 @@
   /* Main Adaptive Structural Tokens */
   --bg-primary: light-dark(
     var(--bg-primary-light, var(--fallback-bg-primary-light)),
+    var(--bg-primary-dark, var(--fallback-bg-primary-dark))
+  );
+
+  --bg-secondary: light-dark(
+    var(--bg-secondary-light, var(--fallback-bg-secondary-light)),
     var(--bg-secondary-dark, var(--fallback-bg-secondary-dark))
   );
 
@@ -180,6 +187,9 @@
 /* --- Standard Structural Backgrounds --- */
 .bg-primary {
   background-color: var(--bg-primary);
+}
+.bg-secondary {
+  background-color: var(--bg-secondary);
 }
 .bg-canvas {
   background-color: var(--bg-canvas);

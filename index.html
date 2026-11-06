@@ -14,6 +14,7 @@
     <script type="module" src="/components/textareas/v1/index.js"></script>
     <script type="module" src="/components/radios/v1/index.js"></script>
     <script type="module" src="/components/checkboxes/v1/index.js"></script>
+    <script type="module" src="/components/selects/v1/index.js"></script>
     <style>
       /* Global CSS rules applied on the main document */
       :root,
@@ -234,12 +235,53 @@
           name="check-v1"
           value="no.1"
           label="No.1"
+          checked
         ></sample-checkbox-v1>
         <sample-checkbox-v1
           name="check-v1"
           value="no.2"
           label="No.2"
         ></sample-checkbox-v1>
+      </div>
+      <span>--------------------select-------------------</span>
+      <div
+        role="radiogroup"
+        aria-labelledby="plan-label"
+        style="
+          display: flex;
+          gap: 24px;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <sample-select-v1
+          name="select-1"
+          label="Select 1"
+          placeholder="Choose some plan"
+          multiple
+          required
+        >
+          <option value="free">Free</option>
+          <option value="pro" selected>Pro</option>
+          <optgroup label="Business">
+            <option value="team">Team</option>
+            <option value="corp" disabled>Corporate</option>
+          </optgroup>
+        </sample-select-v1>
+
+        <sample-select-v1
+          name="select-2"
+          label="Select 2"
+          placeholder="Choose some plan"
+        >
+          <option value="free">Free</option>
+          <option value="pro" selected>Pro</option>
+          <optgroup label="Business">
+            <option value="team">Team</option>
+            <option value="corp" disabled>Corporate</option>
+          </optgroup>
+        </sample-select-v1>
       </div>
       <button style="padding: 2px 4px; border-radius: 2px" type="submit">
         Submit
@@ -366,7 +408,7 @@
                 width="70"
                 height="70"
                 alt="Logo"
-                style="border-radius: 5px; object-fit: cover; object-position: center"
+                style="border-radius: 4px; object-fit: cover; object-position: center"
             /></sample-card-v1>
 
             <sample-card-v2
@@ -381,7 +423,7 @@
                 width="70"
                 height="70"
                 alt="Logo"
-                style="border-radius: 5px; object-fit: cover; object-position: center"
+                style="border-radius: 4px; object-fit: cover; object-position: center"
               />
             </sample-card-v2>
 

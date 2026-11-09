@@ -31,8 +31,8 @@ export class Select extends BaseSelectElement {
       stylesheet,
     ];
     this._root.innerHTML = /* HTML */ `<div
-      style="display: flex;gap: 8px;align-items: baseline;"
-      class="text-md text-primary"
+      part="wrapper"
+      class="select-wrapper text-md text-primary"
     >
       <slot name="label">
         <label

@@ -1,5 +1,23 @@
 @use "@/shared/scss/theme" as *;
 
+.select-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  width: 100%;
+}
+
+.select-wrapper > slot[name="label"] {
+  flex: 0 0 120px;
+  min-width: 120px;
+}
+
+.select-wrapper > slot[name="label"] > label,
+::slotted([slot="label"]) {
+  display: block;
+  min-width: 120px;
+}
+
 [part="display"] {
   padding: 4px 8px;
   font: inherit;
@@ -76,6 +94,23 @@
   pointer-events: auto;
   padding-top: 6px;
   padding-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+  .select-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .select-wrapper > slot[name="label"] {
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .select-wrapper > slot[name="label"] > label,
+  ::slotted([slot="label"]) {
+    white-space: normal;
+  }
 }
 
 /* 4. Decorative accent focus indicator boundaries */

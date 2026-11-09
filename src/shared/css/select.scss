@@ -1,5 +1,9 @@
 @use "@/shared/scss/theme" as *;
 
+div[part="container"] {
+  anchor-name: --container;
+}
+
 select,
 ::picker(select) {
   appearance: base-select;
@@ -11,6 +15,7 @@ select,
 }
 
 select {
+  anchor-name: --select;
   border: 1px solid t("border-contrast-medium");
   background-color: transparent;
   cursor: pointer;
@@ -22,4 +27,16 @@ select {
   border-radius: 6px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   padding: 4px;
+  min-height: 120px;
+}
+
+@supports (appearance: base-select) {
+  select:open::picker(select) {
+    position: fixed;
+    position-anchor: --container;
+    position-try-fallbacks: flip-block;
+    top: anchor(bottom);
+    bottom: anchor(top);
+    margin: 4px 0;
+  }
 }

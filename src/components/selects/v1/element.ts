@@ -44,7 +44,7 @@ export class Select extends BaseSelectElement {
       <div
         part="container"
         tabindex="0"
-        class="${this.multiple ? "dropdown-container shadow-on-interaction" : ""} text-primary"
+        class="${this.multiple ? "dropdown-container" : ""} shadow-on-interaction text-primary"
         style="display:flex;flex-direction:column;gap:8px;align-items:center;position:relative;outline:none;width:100%;"
       >
         <p

@@ -1,7 +1,12 @@
 import fg from "fast-glob";
 import path from "node:path";
-import terser from "@rollup/plugin-terser";
-import { assets, toDist, toOutDir, tsPlugins } from "./rollup.common.js";
+import {
+  assets,
+  minifyPlugins,
+  toDist,
+  toOutDir,
+  tsPlugins,
+} from "./rollup.common.js";
 
 const sharedConfigs = fg
   .sync("src/shared/**/*.{css,scss,svg}", {
@@ -10,7 +15,7 @@ const sharedConfigs = fg
   .map((file) => ({
     input: file,
     output: { file: toDist(path.resolve(file)), format: "es" },
-    plugins: [assets(), terser()],
+    plugins: [assets(), ...minifyPlugins()],
   }));
 
 const elementConfigs = fg.sync("src/**/element.ts").map((file) => {

@@ -1,0 +1,59 @@
+@use "@/shared/scss/theme" as *;
+
+:host {
+  display: inline-block;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  background-color: t("bg-accent");
+  color: t("text-on-accent");
+  font: inherit;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(0.94);
+}
+
+button:focus-visible {
+  outline: 2px solid t("text-accent");
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+:host([variant="secondary"]) button {
+  background-color: t("bg-primary");
+  color: t("text-primary");
+}
+
+:host([variant="outline"]) button {
+  border-color: t("border-contrast-medium");
+  background-color: transparent;
+  color: t("text-primary");
+}
+
+:host([size="sm"]) button {
+  padding: 4px 8px;
+  font-size: 0.875em;
+}
+
+:host([size="lg"]) button {
+  padding: 12px 20px;
+  font-size: 1.125em;
+}

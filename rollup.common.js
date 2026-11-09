@@ -12,7 +12,10 @@ export const sharedDir = path.join(srcDir, "shared");
 export const distDir = path.resolve("dist");
 
 export const toSheet = async (css) => {
-  const { code } = await transform(css, { loader: "css", minify: true });
+  const { code } = await transform(css, {
+    loader: "css",
+    minify: true,
+  });
   return `const sheet = new CSSStyleSheet();
           sheet.replaceSync(${JSON.stringify(code.trim())});
           export default sheet;`;
@@ -67,12 +70,7 @@ export const assets = ({ externalizeShared = false, outDir } = {}) => {
     load(id) {
       if (id.endsWith(".css")) {
         this.addWatchFile(id);
-        const css = fs.readFileSync(id, "utf8");
-        return `
-          const sheet = new CSSStyleSheet();
-          sheet.replaceSync(${JSON.stringify(css)});
-          export default sheet;
-        `;
+        return toSheet(fs.readFileSync(id, "utf8"));
       }
       if (id.endsWith(".scss")) {
         const result = sass.compile(id, {
@@ -123,8 +121,10 @@ export const copyFiles = (pairs) => {
 };
 
 // the esbuild/terser pair is repeated everywhere, so wrap it once
+export const minifyPlugins = () => [terser()];
+
 export const tsPlugins = () => [
   resolve({ extensions: [".ts", ".js"] }),
   esbuild({ target: "es2022", tsconfig: "./tsconfig.json" }),
-  terser(),
+  ...minifyPlugins(),
 ];

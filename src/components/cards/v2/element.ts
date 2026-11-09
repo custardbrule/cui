@@ -1,5 +1,7 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
+import stylesheet from "./style.scss" with { type: "css" };
 
 export class Card extends HTMLElement {
   static get observedAttributes() {
@@ -28,19 +30,10 @@ export class Card extends HTMLElement {
       'The card component supports a size prop that defaults to "default" for standard spacing and sizing.';
     const buttonLabel = this.getAttribute("button-label") || "Action";
 
-    root.adoptedStyleSheets = [sheet, presetsheet];
+    root.adoptedStyleSheets = [presetsheet, utilities, schemesheet, stylesheet];
     root.innerHTML = `
-      <style>
-        #action-button {
-            box-shadow: 0 0px 0px transparent;
-            transition: box-shadow 0.2s ease-in-out;
-        }
-          #action-button:hover {
-              box-shadow: 0 4px 6px rgb(from var(--bg-secondary, var(--fallback-bg-secondary)) r g b / 0.4);
-          }
-      </style>
       <div
-        class="bg-primary text-primary shadow-md"
+        class="bg-primary text-primary shadow-md round-lg"
         style="
           display: flex;
           flex-direction: column;
@@ -48,7 +41,6 @@ export class Card extends HTMLElement {
           width: 100%;
           max-width: 540px;
           border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 12px;
           padding: 20px 16px;
           box-sizing: border-box;
         "

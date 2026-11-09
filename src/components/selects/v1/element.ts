@@ -1,5 +1,6 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import selectsheet from "@/shared/css/select.scss" with { type: "css" };
 import closeSvg from "@/shared/icons/close-square-svgrepo-com.svg";
 import stylesheet from "./style.scss" with { type: "css" };
@@ -23,8 +24,9 @@ export class Select extends BaseSelectElement {
     const label = this.getAttribute("label") || "";
 
     this._root.adoptedStyleSheets = [
-      sheet,
+      schemesheet,
       presetsheet,
+      utilities,
       selectsheet,
       stylesheet,
     ];
@@ -42,12 +44,12 @@ export class Select extends BaseSelectElement {
       <div
         part="container"
         tabindex="0"
-        class="${this.multiple ? "dropdown-container" : ""} text-primary"
+        class="${this.multiple ? "dropdown-container shadow-on-interaction" : ""} text-primary"
         style="display:flex;flex-direction:column;gap:8px;align-items:center;position:relative;outline:none;width:100%;"
       >
         <p
           part="display"
-          class="border-medium"
+          class="border-medium round-sm"
           style="display:flex;gap:4px;align-items:center;cursor:pointer;width:100%;box-sizing:border-box;"
           ${this.multiple ? "" : "hidden"}
         >
@@ -56,7 +58,7 @@ export class Select extends BaseSelectElement {
         <select
           id="${this.name}"
           part="select"
-          class="border-medium"
+          class="border-medium round-md"
           name="${this.name}"
           ${this.multiple ? "multiple" : ""}
           ${this.required ? "required" : ""}
@@ -86,7 +88,7 @@ export class Select extends BaseSelectElement {
   //----integrate form----
   private renderDisplayItem = (opt: HTMLOptionElement) => {
     const item = document.createElement("span");
-    item.className = "bg-primary text-secondary tag";
+    item.className = "bg-primary text-secondary tag round-md";
     item.innerHTML = /* HTML */ ` ${closeSvg}${opt.value} `;
     item.querySelector("svg")!.onclick = function (e) {
       opt.click();

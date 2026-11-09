@@ -1,5 +1,6 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
 
 export class Card extends HTMLElement {
@@ -17,9 +18,9 @@ export class Card extends HTMLElement {
       this.getAttribute("detail") ||
       'The card component supports a size prop that defaults to "default" for standard spacing and sizing.';
 
-    root.adoptedStyleSheets = [sheet, presetsheet, stylesheet];
+    root.adoptedStyleSheets = [presetsheet, utilities, schemesheet, stylesheet];
     root.innerHTML = /* HTML */ `
-      <div class="bg-primary text-primary shadow-md card">
+      <div class="bg-primary text-primary shadow-md round-lg card">
         <div class="card-header">
           <slot name="card-image"></slot>
           <div>

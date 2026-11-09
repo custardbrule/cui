@@ -1,3 +1,5 @@
+@use "@/shared/scss/theme" as *;
+
 select,
 ::picker(select) {
   appearance: base-select;
@@ -5,15 +7,14 @@ select,
 }
 
 select {
-  border: 1px solid var(--border-contrast-medium);
-  border-radius: 6px;
+  border: 1px solid t("border-contrast-medium");
   background-color: transparent;
   cursor: pointer;
 }
 
 ::picker(select) {
   background-color: transparent;
-  border: 1px solid var(--border-contrast-medium);
+  border: 1px solid t("border-contrast-medium");
   border-radius: 6px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   padding: 4px;

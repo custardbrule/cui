@@ -1,14 +1,15 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 
 export class Card extends HTMLElement {
   render() {
     const root = this.shadowRoot || this.attachShadow({ mode: "open" });
 
-    root.adoptedStyleSheets = [sheet, presetsheet];
+    root.adoptedStyleSheets = [presetsheet, utilities, schemesheet];
     root.innerHTML = `
       <div
-        class="bg-primary text-primary shadow-md"
+        class="bg-primary text-primary shadow-md round-lg"
         style="
           display: flex;
           flex-direction: column;
@@ -17,7 +18,6 @@ export class Card extends HTMLElement {
           max-width: 540px;
           min-width: 360px;
           border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 12px;
           padding: 20px 16px;
           box-sizing: border-box;
         "

@@ -1,3 +1,5 @@
+@use "@/shared/scss/theme" as *;
+
 input[type="radio"] {
   appearance: none;
   background-color: transparent;
@@ -11,7 +13,6 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0px 0px transparent;
   cursor: pointer;
 }
 
@@ -22,13 +23,9 @@ input[type="radio"]::before {
   border-radius: 50%;
   transform: scale(0);
   transition: transform 120ms ease-in-out;
-  background-color: var(--text-accent, currentColor);
+  background-color: t("text-accent");
 }
 
 input[type="radio"]:checked::before {
   transform: scale(1);
-}
-
-input[type="radio"]:focus {
-  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
 }

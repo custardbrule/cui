@@ -1,0 +1,127 @@
+@use "sass:list";
+@use "sass:map";
+
+$tokens: (
+  "bg-primary": (
+    #a8abaf,
+    #2c3033,
+  ),
+  "bg-secondary": (
+    #a2acad,
+    #3f4b59,
+  ),
+  "bg-canvas": (
+    #f8fafc,
+    #0f172a,
+  ),
+  "bg-surface": (
+    #ffffff,
+    #1e293b,
+  ),
+  "bg-subtle": (
+    #f1f5f9,
+    #334155,
+  ),
+  "bg-contrast": (
+    #1e293b,
+    #ffffff,
+  ),
+  "bg-accent": (
+    #ff4081,
+    #ff4081,
+  ),
+  "bg-tint": (
+    rgba(255, 64, 129, 0.08),
+    rgba(255, 64, 129, 0.15),
+  ),
+  "bg-hover-overlay": (
+    rgba(0, 0, 0, 0.04),
+    rgba(255, 255, 255, 0.06),
+  ),
+  "overlay-bg": (
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.7),
+  ),
+  "text-primary": (
+    #1f1f1f,
+    #f5f5f5,
+  ),
+  "text-secondary": (
+    #534f4f,
+    #d6c5c5,
+  ),
+  "text-accent": (
+    #ff4081,
+    #ff4081,
+  ),
+  "text-on-contrast": (
+    #ffffff,
+    #0f172a,
+  ),
+  "text-on-accent": (
+    #ffffff,
+    #ffffff,
+  ),
+  "text-contrast-high": (
+    #111111,
+    #ffffff,
+  ),
+  "text-contrast-muted": (
+    #595959,
+    #a3a3a3,
+  ),
+  "border-contrast-low": (
+    #e4e4e7,
+    #27272a,
+  ),
+  "border-contrast-medium": (
+    #a1a1aa,
+    #52525b,
+  ),
+  "border-contrast-high": (
+    #27272a,
+    #e4e4e7,
+  ),
+);
+
+@function t($name) {
+  @if not map.has-key($tokens, $name) {
+    @error "Unknown theme token `#{$name}`.";
+  }
+
+  $pair: map.get($tokens, $name);
+
+  @if $name == "text-accent" {
+    @return var(
+      --#{$name},
+      var(
+        --custom-text-accent,
+        light-dark(
+          var(--#{$name}-light, #{list.nth($pair, 1)}),
+          var(--#{$name}-dark, #{list.nth($pair, 2)})
+        )
+      )
+    );
+  }
+
+  @if $name == "bg-contrast" {
+    @return var(
+      --bg-primary-contrast,
+      var(
+        --bg-contrast,
+        light-dark(
+          var(--bg-contrast-light, #{list.nth($pair, 1)}),
+          var(--bg-contrast-dark, #{list.nth($pair, 2)})
+        )
+      )
+    );
+  }
+
+  @return var(
+    --#{$name},
+    light-dark(
+      var(--#{$name}-light, #{list.nth($pair, 1)}),
+      var(--#{$name}-dark, #{list.nth($pair, 2)})
+    )
+  );
+}

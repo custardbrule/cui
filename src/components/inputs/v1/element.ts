@@ -1,5 +1,6 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
 import { FORWARDED, HANDLER_ATTRS } from "@/shared/constants";
 import { esc } from "@/shared/utils";
@@ -49,7 +50,12 @@ export class Input extends BaseInputElement {
     const label = this.getAttribute("label");
     const required = this.hasAttribute("required");
 
-    this._root.adoptedStyleSheets = [sheet, presetsheet, stylesheet];
+    this._root.adoptedStyleSheets = [
+      presetsheet,
+      utilities,
+      schemesheet,
+      stylesheet,
+    ];
     this._root.innerHTML = /* HTML */ ` <div class="wrapper">
       ${
         label
@@ -58,7 +64,10 @@ export class Input extends BaseInputElement {
             }</label>`
           : ""
       }
-      <div id="input-container" class="text-primary border-medium">
+      <div
+        id="input-container"
+        class="text-primary border-medium shadow-on-interaction round-sm"
+      >
         <slot name="left-icon"></slot>
         <input id="inner-input" part="input" />
         <slot name="right-icon"></slot>

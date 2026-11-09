@@ -1,3 +1,5 @@
+@use "@/shared/scss/theme" as *;
+
 .toggle-checkbox-wrapper {
   display: inline-flex;
   align-items: center; // Ensures the outer component sits perfectly on the text baseline
@@ -8,9 +10,9 @@
   display: inline-block;
   width: 48px;
   height: 24px;
-  background-color: var(--bg-primary); // Default track background state color
+  background-color: t("bg-primary");
   border-radius: 50px;
-  outline: 2px solid var(--bg-accent);
+  outline: 2px solid t("bg-accent");
   cursor: pointer;
   transition: background-color 0.3s ease;
   user-select: none;
@@ -23,7 +25,7 @@
     left: 0;
     height: 20px;
     width: 20px;
-    background-color: var(--bg-accent); // Default circle knob state color
+    background-color: t("bg-accent");
     border-radius: 50%;
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 

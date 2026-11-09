@@ -1,0 +1,10 @@
+@use "@/shared/scss/theme" as *;
+
+#action-button {
+  box-shadow: 0 0 0 transparent;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 4px 6px rgb(from #{t("bg-secondary")} r g b / 0.4);
+  }
+}

@@ -1,0 +1,117 @@
+@use "sass:meta";
+@use "sass:map";
+@use "theme" as theme;
+
+$utilities: (
+  "bg-primary": (
+    background-color: theme.t("bg-primary"),
+  ),
+  "bg-secondary": (
+    background-color: theme.t("bg-secondary"),
+  ),
+  "bg-canvas": (
+    background-color: theme.t("bg-canvas"),
+  ),
+  "bg-surface": (
+    background-color: theme.t("bg-surface"),
+  ),
+  "bg-subtle": (
+    background-color: theme.t("bg-subtle"),
+  ),
+  "overlay": (
+    background-color: theme.t("overlay-bg"),
+  ),
+  "hoverable-pop": (
+    position: relative,
+    transition: background-color 0.2s ease,
+    "&:hover": (
+      background-color: theme.t("bg-hover-overlay"),
+    ),
+  ),
+  "text-primary": (
+    color: theme.t("text-primary"),
+  ),
+  "text-secondary": (
+    color: theme.t("text-secondary"),
+  ),
+  "text-accent": (
+    color: theme.t("text-accent"),
+  ),
+  "text-high": (
+    color: theme.t("text-contrast-high"),
+  ),
+  "text-muted": (
+    color: theme.t("text-contrast-muted"),
+  ),
+  "border-low": (
+    border: 1px solid theme.t("border-contrast-low"),
+  ),
+  "border-medium": (
+    border: 1px solid theme.t("border-contrast-medium"),
+  ),
+  "border-high": (
+    border: 1px solid theme.t("border-contrast-high"),
+  ),
+  "bg-contrast": (
+    background-color: theme.t("bg-contrast"),
+    color: theme.t("text-on-contrast"),
+  ),
+  "bg-accent": (
+    background-color: theme.t("bg-accent"),
+    color: theme.t("text-on-accent"),
+  ),
+  "bg-tint": (
+    background-color: theme.t("bg-tint"),
+    color: theme.t("text-accent"),
+  ),
+  "interactive-element": (
+    outline: 2px solid transparent,
+    outline-offset: 2px,
+    transition: outline-color 0.2s ease,
+  ),
+  "round-sm": (
+    border-radius: 4px,
+  ),
+  "round-md": (
+    border-radius: 6px,
+  ),
+  "round-lg": (
+    border-radius: 12px,
+  ),
+  "shadow-on-interaction": (
+    "&:is(:hover, :focus, :focus-within)": (
+      box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1)),
+    ),
+    "&:focus-within [part='display']": (
+      box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1)),
+    ),
+  ),
+);
+
+@mixin emit-rules($rules) {
+  @each $property, $value in $rules {
+    @if meta.type-of($value) == "map" {
+      #{$property} {
+        @include emit-rules($value);
+      }
+    } @else {
+      #{$property}: $value;
+    }
+  }
+}
+
+@mixin utilities($names...) {
+  @each $name in $names {
+    @if not map.has-key($utilities, $name) {
+      @error "Unknown utility `#{$name}`.";
+    }
+
+    .#{$name} {
+      @include emit-rules(map.get($utilities, $name));
+    }
+  }
+}
+
+@mixin all {
+  @include utilities(map.keys($utilities)...);
+}

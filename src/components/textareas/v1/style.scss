@@ -13,7 +13,6 @@ label {
 }
 
 [part="textarea"] {
-  border-radius: 4px;
   padding: 4px 8px;
   min-height: 120px;
   min-width: 240px;
@@ -22,11 +21,4 @@ label {
   resize: vertical;
   font: inherit;
   box-sizing: border-box;
-}
-
-[part="textarea"]:hover {
-  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
-}
-[part="textarea"]:focus {
-  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
 }

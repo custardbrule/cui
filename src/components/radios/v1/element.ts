@@ -1,5 +1,6 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import radiosheet from "@/shared/css/radio.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
 import { BaseRadioElement, type SyncEvent } from "@/components/radios/base";
@@ -14,7 +15,13 @@ export class Radio extends BaseRadioElement {
     const disabled = this.hasAttribute("disabled");
     const required = this.hasAttribute("required");
 
-    root.adoptedStyleSheets = [sheet, presetsheet, radiosheet, stylesheet];
+    root.adoptedStyleSheets = [
+      schemesheet,
+      presetsheet,
+      utilities,
+      radiosheet,
+      stylesheet,
+    ];
     root.innerHTML = /* HTML */ `<div
       part="container"
       class="text-md text-primary"
@@ -27,6 +34,7 @@ export class Radio extends BaseRadioElement {
         ${required ? "required" : ""}
         type="radio"
         part="input"
+        class="shadow-on-interaction"
         tabindex="-1"
       />
       <span part="label">${label}</span>

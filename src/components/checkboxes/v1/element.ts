@@ -1,5 +1,6 @@
-import sheet from "@/shared/css/styles.scss" with { type: "css" };
+import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
+import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import checkboxsheet from "@/shared/css/checkbox.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
 import { BaseCheckboxElement } from "@/components/checkboxes/base";
@@ -14,7 +15,13 @@ export class Checkbox extends BaseCheckboxElement {
     const disabled = this.hasAttribute("disabled");
     const required = this.hasAttribute("required");
 
-    root.adoptedStyleSheets = [sheet, presetsheet, checkboxsheet, stylesheet];
+    root.adoptedStyleSheets = [
+      schemesheet,
+      presetsheet,
+      utilities,
+      checkboxsheet,
+      stylesheet,
+    ];
     root.innerHTML = /* HTML */ `<div
       part="container"
       class="text-md text-primary"
@@ -27,6 +34,7 @@ export class Checkbox extends BaseCheckboxElement {
         ${required ? "required" : ""}
         type="checkbox"
         part="input"
+        class="shadow-on-interaction"
         tabindex="-1"
       />
       <span part="label">${label}</span>

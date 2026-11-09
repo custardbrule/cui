@@ -1,3 +1,5 @@
+@use "@/shared/scss/theme" as *;
+
 :root {
   --form-control-disabled: #959495;
 }
@@ -14,7 +16,6 @@ input[type="checkbox"] {
   border-radius: 0.15em;
   transform: translateY(-0.075em);
   display: grid;
-  box-shadow: 0 0px 0px transparent;
   place-content: center;
 }
 
@@ -24,17 +25,13 @@ input[type="checkbox"]::before {
   height: 0.65em;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  background-color: var(--text-accent, currentColor);
+  background-color: t("text-accent");
   transform-origin: bottom left;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
 input[type="checkbox"]:checked::before {
   transform: scale(1);
-}
-
-input[type="checkbox"]:focus {
-  box-shadow: var(--box-shadow, 0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 input[type="checkbox"]:disabled {

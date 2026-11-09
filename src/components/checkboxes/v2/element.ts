@@ -2,7 +2,6 @@ import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
 import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
-import { esc } from "@/shared/utils";
 import { BaseCheckboxElement } from "@/components/checkboxes/base";
 
 export class Checkbox extends BaseCheckboxElement {
@@ -31,11 +30,6 @@ export class Checkbox extends BaseCheckboxElement {
           id="toggle"
         />
         <label class="slider-btn" for="toggle"></label>
-        <span part="label">
-          <slot name="label">
-            <span ${label ? "" : "hidden"}>${esc(label)}</span>
-          </slot>
-        </span>
       </div>
     `;
 

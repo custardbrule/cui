@@ -62,6 +62,20 @@ class BaseInputElement extends HTMLElement {
     return this.internals.reportValidity();
   }
 
+  formResetCallback() {
+    if (!this._input) return;
+
+    this._input.value = this.getAttribute("value") ?? "";
+    this.internals.setFormValue(this._input.value);
+    if (this._input.validity.valid) this.internals.setValidity({});
+    else
+      this.internals.setValidity(
+        this._input.validity,
+        this._input.validationMessage,
+        this._input,
+      );
+  }
+
   constructor() {
     super();
     this._root = this.attachShadow({ mode: "open", delegatesFocus: true });

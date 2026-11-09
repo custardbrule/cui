@@ -6,7 +6,6 @@
     <meta name="color-scheme" content="light dark" />
     <title>Document</title>
     <script type="module" src="/components/headers/v1/index.js"></script>
-    <script type="module" src="/components/buttons/v1/index.js"></script>
     <script type="module" src="/components/cards/v1/index.js"></script>
     <script type="module" src="/components/cards/v2/index.js"></script>
     <script type="module" src="/components/cards/v3/index.js"></script>
@@ -17,6 +16,7 @@
     <script type="module" src="/components/checkboxes/v1/index.js"></script>
     <script type="module" src="/components/checkboxes/v2/index.js"></script>
     <script type="module" src="/components/selects/v1/index.js"></script>
+    <script type="module" src="/components/buttons/v1/index.js"></script>
     <style>
       /* Global CSS rules applied on the main document */
       :root,
@@ -285,7 +285,18 @@
           </optgroup>
         </sample-select-v1>
       </div>
-      <sample-button-v1 type="submit">Submit</sample-button-v1>
+      <div style="display: flex; gap: 24px">
+        <sample-button-v1 type="submit">Submit</sample-button-v1>
+        <sample-button-v1 type="reset" variant="secondary"
+          >Reset</sample-button-v1
+        >
+        <sample-button-v1
+          onclick="console.log(event)"
+          type="button"
+          variant="outline"
+          >Button</sample-button-v1
+        >
+      </div>
     </form>
 
     <div id="main-content"></div>

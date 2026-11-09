@@ -16,6 +16,11 @@ export class Textarea extends BaseTextAreaElement {
 
     const target = name.startsWith("c-on") ? name.slice(2) : name;
     const value = this.getAttribute(name);
+    if (name === "value") {
+      this._input.value = value ?? "";
+      return;
+    }
+
     if (value !== null) this._input.setAttribute(target, value);
     else this._input.removeAttribute(target);
   }

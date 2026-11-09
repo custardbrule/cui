@@ -85,6 +85,19 @@ export class Select extends BaseSelectElement {
     this.render();
   }
 
+  formResetCallback() {
+    if (!this._select) return;
+
+    const options = Array.from(this._select.options);
+    options.forEach((option) => {
+      option.selected = option.defaultSelected;
+    });
+    if (!this.multiple && !options.some((option) => option.selected)) {
+      this._select.selectedIndex = 0;
+    }
+    this.syncFormValue();
+  }
+
   //----integrate form----
   private renderDisplayItem = (opt: HTMLOptionElement) => {
     const item = document.createElement("span");
@@ -106,32 +119,27 @@ export class Select extends BaseSelectElement {
     );
     this._options.forEach((el) => this._select!.append(el));
 
-    this._select.addEventListener("change", (event) => {
-      if (this.multiple) {
-        const eles: HTMLElement[] = [];
-        const fd = new FormData();
-        [...this._select!.querySelectorAll("option")]
-          .filter((opt) => opt.selected)
-          .forEach((opt) => {
-            fd.append(this._select!.name, opt.value);
-            eles.push(this.renderDisplayItem(opt));
-          });
+    this._select.addEventListener("change", () => this.syncFormValue());
+    this.syncFormValue();
+  }
 
-        this._display!.replaceChildren(
-          ...(eles.length ? eles : [this.placeholder]),
-        );
-        this._internals.setFormValue(fd);
-      } else {
-        this._internals.setFormValue(this._select!.value);
-      }
-    });
+  private syncFormValue() {
+    if (!this._select || !this._display) return;
 
-    const selected = [...this._select!.querySelectorAll("option")]
-      .filter((otp) => otp.selected)
-      .map((otp) => this.renderDisplayItem(otp));
-    this._display!.replaceChildren(
-      ...(selected.length ? selected : [this.placeholder]),
+    const selected = Array.from(this._select.selectedOptions);
+    this._display.replaceChildren(
+      ...(selected.length
+        ? selected.map((option) => this.renderDisplayItem(option))
+        : [this.placeholder]),
     );
+
+    if (this.multiple) {
+      const formData = new FormData();
+      selected.forEach((option) => formData.append(this.name, option.value));
+      this._internals.setFormValue(formData);
+    } else {
+      this._internals.setFormValue(this._select.value);
+    }
   }
 }
 

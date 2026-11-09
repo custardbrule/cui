@@ -7,6 +7,17 @@
   box-sizing: border-box;
 }
 
+[part="container"] {
+  flex: 1;
+  min-width: 0;
+}
+
+[part="select"] {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
 .required {
   color: red;
 }

@@ -72,6 +72,13 @@ class BaseCheckboxElement extends HTMLElement {
     return this.internals.reportValidity();
   }
 
+  formResetCallback() {
+    if (!this._checkbox) return;
+
+    this._checkbox.checked = this.hasAttribute("checked");
+    this.internals.setFormValue(this._checkbox.checked ? this.value : null);
+  }
+
   constructor() {
     super();
     this.setAttribute("c-checkbox", "");

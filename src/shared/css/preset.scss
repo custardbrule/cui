@@ -1,6 +1,8 @@
 /* preset (trimmed for shadow DOM components) */
 
 :host {
+  display: block;
+  width: 100%;
   box-sizing: border-box;
 }
 

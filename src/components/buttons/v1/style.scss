@@ -1,13 +1,17 @@
 @use "@/shared/scss/theme" as *;
 
 :host {
-  display: inline-block;
+  display: block;
+  width: 100%;
 }
 
 button {
+  --button-active-outline: #{t("text-accent")};
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: 8px 14px;
   border: 1px solid transparent;
   background-color: t("bg-accent");
@@ -20,11 +24,24 @@ button {
     background-color 0.2s ease,
     color 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    filter 0.2s ease,
+    outline 0.2s ease,
+    transform 0.2s ease;
 }
 
 button:hover:not(:disabled) {
   filter: brightness(0.94);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+}
+
+button:active:not(:disabled) {
+  filter: brightness(0.9);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  outline: 2px solid var(--button-active-outline);
+  outline-offset: 2px;
 }
 
 button:focus-visible {
@@ -38,11 +55,15 @@ button:disabled {
 }
 
 :host([variant="secondary"]) button {
+  --button-active-outline: #{t("border-contrast-high")};
+
   background-color: t("bg-primary");
   color: t("text-primary");
 }
 
 :host([variant="outline"]) button {
+  --button-active-outline: #{t("border-contrast-medium")};
+
   border-color: t("border-contrast-medium");
   background-color: transparent;
   color: t("text-primary");
@@ -56,4 +77,10 @@ button:disabled {
 :host([size="lg"]) button {
   padding: 12px 20px;
   font-size: 1.125em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
 }

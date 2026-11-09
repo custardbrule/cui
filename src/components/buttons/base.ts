@@ -10,7 +10,6 @@ export abstract class BaseButtonElement extends HTMLElement {
     super();
     this._root = this.attachShadow({ mode: "open", delegatesFocus: true });
     this._internals = this.attachInternals();
-    this._internals.setFormValue(null);
   }
 
   get button() {
@@ -35,6 +34,6 @@ export abstract class BaseButtonElement extends HTMLElement {
 
   formDisabledCallback(disabled: boolean) {
     this._formDisabled = disabled;
-    if (this._button) this._button.disabled = this.disabled;
+    if (this._button) this._button.disabled = disabled;
   }
 }

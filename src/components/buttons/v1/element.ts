@@ -16,7 +16,9 @@ export class Button extends BaseButtonElement {
 
   render() {
     const type =
-      buttonTypes.find((buttonType) => buttonType === this.type) ?? "button";
+      buttonTypes.find(
+        (buttonType) => buttonType === this.getAttribute("type"),
+      ) ?? "button";
 
     this._root.adoptedStyleSheets = [
       presetsheet,
@@ -41,8 +43,17 @@ export class Button extends BaseButtonElement {
   private bindings() {
     this._button = this._root.querySelector("button")!;
     this._button.addEventListener("click", () => {
-      if (this._button!.type === "submit") this.form?.requestSubmit();
-      else if (this._button!.type === "reset") this.form?.reset();
+      switch (this._button!.type) {
+        case "submit":
+          this.form?.requestSubmit();
+          break;
+        case "reset":
+          this.form?.reset();
+          break;
+        default:
+          this._button!.onclick = this.onclick;
+          break;
+      }
     });
   }
 

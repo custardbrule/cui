@@ -2,6 +2,7 @@
   display: flex;
   gap: 16px;
   align-items: center;
+  width: 100%;
 }
 
 #input-label {
@@ -13,6 +14,8 @@
 }
 
 [part="input"] {
+  width: 100%;
+  min-width: 0;
   padding: 4px 8px;
   flex: 1;
 }
@@ -21,7 +24,8 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  min-width: 120px;
+  min-width: 0;
   width: 100%;
+  flex: 1;
   transition: all 0.2s ease-in-out;
 }

@@ -72,6 +72,24 @@ class BaseRadioElement extends HTMLElement {
     return this.internals.reportValidity();
   }
 
+  formResetCallback() {
+    const scope = (this.form ?? this.getRootNode()) as ParentNode;
+    const group = Array.from(
+      scope.querySelectorAll<BaseRadioElement>("[c-radio]"),
+    ).filter((radio) => radio.name === this.name && radio.form === this.form);
+    if (!group.includes(this)) group.push(this);
+    const checkedRadio = group
+      .filter((radio) => radio.hasAttribute("checked"))
+      .at(-1);
+
+    for (const radio of group) {
+      if (!radio._radio) continue;
+
+      radio._radio.checked = radio === checkedRadio;
+      radio.internals.setFormValue(radio._radio.checked ? radio.value : null);
+    }
+  }
+
   constructor() {
     super();
     this.setAttribute("c-radio", "");

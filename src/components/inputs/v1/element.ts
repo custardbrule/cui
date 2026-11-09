@@ -57,13 +57,14 @@ export class Input extends BaseInputElement {
       stylesheet,
     ];
     this._root.innerHTML = /* HTML */ ` <div class="wrapper">
-      ${
-        label
-          ? `<label id="input-label" class="font-semibold text-md text-primary">${esc(label)}${
-              required ? `<span class="required">*</span>` : ""
-            }</label>`
-          : ""
-      }
+      <slot name="label">
+        <label
+          id="input-label"
+          class="font-semibold text-md text-primary"
+          ${label ? "" : "hidden"}
+          >${esc(label || "")}${required ? `<span class="required">*</span>` : ""}</label
+        >
+      </slot>
       <div
         id="input-container"
         class="text-primary border-medium shadow-on-interaction round-sm"

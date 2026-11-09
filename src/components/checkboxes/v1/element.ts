@@ -3,6 +3,7 @@ import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
 import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import checkboxsheet from "@/shared/css/checkbox.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
+import { esc } from "@/shared/utils";
 import { BaseCheckboxElement } from "@/components/checkboxes/base";
 
 export class Checkbox extends BaseCheckboxElement {
@@ -37,7 +38,11 @@ export class Checkbox extends BaseCheckboxElement {
         class="shadow-on-interaction"
         tabindex="-1"
       />
-      <span part="label">${label}</span>
+      <span part="label">
+        <slot name="label">
+          <span ${label ? "" : "hidden"}>${esc(label)}</span>
+        </slot>
+      </span>
     </div>`;
 
     this.bindings();

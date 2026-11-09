@@ -63,13 +63,14 @@ export class Textarea extends BaseTextAreaElement {
       stylesheet,
     ];
     this._root.innerHTML = /* HTML */ ` <div class="wrapper">
-      ${
-        label
-          ? `<label for="inner-textarea" class="font-semibold text-md text-primary">${esc(label)}${
-              required ? `<span class="required">*</span>` : ""
-            }</label>`
-          : ""
-      }
+      <slot name="label">
+        <label
+          for="inner-textarea"
+          class="font-semibold text-md text-primary"
+          ${label ? "" : "hidden"}
+          >${esc(label || "")}${required ? `<span class="required">*</span>` : ""}</label
+        >
+      </slot>
       <textarea
         id="inner-textarea"
         part="textarea"

@@ -34,13 +34,18 @@ export class Select extends BaseSelectElement {
       style="display: flex;gap: 8px;align-items: baseline;"
       class="text-md text-primary"
     >
-      ${
-        label
-          ? `<label part="label" for="${this.name}" style="white-space:pre;" class="font-semibold">${esc(label)}${
-              this.required ? `<span class="required">*</span>` : ""
-            }</label>`
-          : ""
-      }
+      <slot name="label">
+        <label
+          part="label"
+          for="${this.name}"
+          style="white-space:pre;"
+          class="font-semibold"
+          ${label ? "" : "hidden"}
+          >${esc(label)}${
+            this.required ? `<span class="required">*</span>` : ""
+          }</label
+        >
+      </slot>
       <div
         part="container"
         tabindex="0"

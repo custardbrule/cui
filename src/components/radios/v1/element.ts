@@ -3,6 +3,7 @@ import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
 import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import radiosheet from "@/shared/css/radio.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
+import { esc } from "@/shared/utils";
 import { BaseRadioElement, type SyncEvent } from "@/components/radios/base";
 
 export class Radio extends BaseRadioElement {
@@ -37,7 +38,11 @@ export class Radio extends BaseRadioElement {
         class="shadow-on-interaction"
         tabindex="-1"
       />
-      <span part="label">${label}</span>
+      <span part="label">
+        <slot name="label">
+          <span ${label ? "" : "hidden"}>${esc(label)}</span>
+        </slot>
+      </span>
     </div>`;
 
     this.bindings();

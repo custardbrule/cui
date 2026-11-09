@@ -33,7 +33,9 @@ export class Button extends BaseButtonElement {
         type="${type}"
         ${this.disabled ? "disabled" : ""}
       >
-        <slot>${esc(this.label)}</slot>
+        <slot>
+          <slot name="label">${esc(this.label)}</slot>
+        </slot>
       </button>
     `;
 

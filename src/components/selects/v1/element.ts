@@ -87,8 +87,8 @@ export class Select extends BaseSelectElement {
   private renderDisplayItem = (opt: HTMLOptionElement) => {
     const item = document.createElement("span");
     item.className = "bg-primary text-secondary tag";
-    item.innerHTML = /* HTML */ ` <span>${closeSvg}</span>${opt.value} `;
-    item.querySelector("span")!.onclick = function (e) {
+    item.innerHTML = /* HTML */ ` ${closeSvg}${opt.value} `;
+    item.querySelector("svg")!.onclick = function (e) {
       opt.click();
     };
 

@@ -1,7 +1,7 @@
 import { BaseInputElement } from "@/components/inputs/base";
 import { FORWARDED, HANDLER_ATTRS } from "@/shared/constants";
 
-class BaseCheckboxElement extends BaseInputElement implements HTMLInputElement {
+class BaseCheckboxElement extends BaseInputElement {
   static formAssociated = true;
   static observedAttributes = [...FORWARDED, ...HANDLER_ATTRS, "label"];
 

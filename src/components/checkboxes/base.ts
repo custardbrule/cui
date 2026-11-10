@@ -1,89 +1,50 @@
-class BaseCheckboxElement extends HTMLElement {
-  static formAssociated = true;
-  static observedAttributes = [
-    "checked",
-    "disabled",
-    "required",
-    "value",
-    "name",
-    "label",
-  ];
-  _root: ShadowRoot;
-  _internals: ElementInternals;
-  _checkbox: HTMLInputElement | null = null;
+import { BaseInputElement } from "@/components/inputs/base";
+import { FORWARDED, HANDLER_ATTRS } from "@/shared/constants";
 
-  //----public API----
-  get internals() {
-    return this._internals;
-  }
+class BaseCheckboxElement extends BaseInputElement implements HTMLInputElement {
+  static formAssociated = true;
+  static observedAttributes = [...FORWARDED, ...HANDLER_ATTRS, "label"];
 
   get checkbox() {
-    return this._checkbox;
+    return this._input;
   }
 
-  get checked() {
-    return this._checkbox?.checked || false;
-  }
-
-  get value() {
-    return this._checkbox?.value || "on";
-  }
-
-  get name() {
-    return this._checkbox?.name || "";
-  }
-
-  get disabled() {
-    return this._checkbox?.disabled || false;
-  }
-
-  get required() {
-    return this._checkbox?.required || false;
-  }
-
-  get type() {
+  protected get defaultType() {
     return "checkbox";
   }
 
-  get form() {
-    return this.internals.form;
+  protected syncAttributeToChild(name: string) {
+    if (!this._input) return;
+
+    const target = name.startsWith("c-on") ? name.slice(2) : name;
+    const value = this.getAttribute(name);
+    if (value !== null) this._input.setAttribute(target, value);
+    else if (target === "type") this._input.type = this.defaultType;
+    else this._input.removeAttribute(target);
+    this.syncFormState();
   }
 
-  get labels() {
-    return this.internals.labels;
-  }
+  protected bindCheckboxEvents() {
+    if (!this._input) return;
 
-  //----integrate form----
-  get validity() {
-    return this.internals.validity;
-  }
-  get validationMessage() {
-    return this.internals.validationMessage;
-  }
+    this._input.addEventListener("input", () => {
+      this.syncFormState();
+      this.dispatchEvent(new Event("input", { composed: true, bubbles: true }));
+    });
 
-  get willValidate() {
-    return this.internals.willValidate;
-  }
+    this._input.addEventListener("change", () => {
+      this.syncFormState();
+      this.dispatchEvent(
+        new Event("change", { composed: true, bubbles: true }),
+      );
+    });
 
-  checkValidity() {
-    return this.internals.checkValidity();
-  }
-  reportValidity() {
-    return this.internals.reportValidity();
-  }
-
-  formResetCallback() {
-    if (!this._checkbox) return;
-
-    this._checkbox.checked = this.hasAttribute("checked");
-    this.internals.setFormValue(this._checkbox.checked ? this.value : null);
+    this.syncFormState();
   }
 
   constructor() {
     super();
     this.setAttribute("c-checkbox", "");
-    this._root = this.attachShadow({ mode: "open" });
-    this._internals = this.attachInternals();
   }
 }
 

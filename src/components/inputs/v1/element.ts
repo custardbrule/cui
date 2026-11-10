@@ -23,16 +23,13 @@ export class Input extends BaseInputElement {
   private bindings() {
     this._input = this._root.querySelector<HTMLInputElement>("[part=input]")!;
 
-    this._input.addEventListener("change", () => {
-      this.internals.setFormValue(this._input!.value);
-      if (this._input!.validity.valid) this.internals.setValidity({});
-      else
-        this.internals.setValidity(
-          this._input!.validity,
-          this._input!.validationMessage,
-          this._input!,
-        );
+    this._input.addEventListener("input", () => {
+      this.syncFormState();
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+    });
 
+    this._input.addEventListener("change", () => {
+      this.syncFormState();
       this.dispatchEvent(new Event("change", { bubbles: true }));
     });
 

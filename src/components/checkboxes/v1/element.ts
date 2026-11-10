@@ -8,31 +8,20 @@ import { BaseCheckboxElement } from "@/components/checkboxes/base";
 
 export class Checkbox extends BaseCheckboxElement {
   render() {
-    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
     const label = this.getAttribute("label") || "";
-    const name = this.getAttribute("name") || "";
-    const value = this.getAttribute("value") || "";
-    const checked = this.hasAttribute("checked");
-    const disabled = this.hasAttribute("disabled");
-    const required = this.hasAttribute("required");
 
-    root.adoptedStyleSheets = [
+    this._root.adoptedStyleSheets = [
       schemesheet,
       presetsheet,
       utilities,
       checkboxsheet,
       stylesheet,
     ];
-    root.innerHTML = /* HTML */ `<div
+    this._root.innerHTML = /* HTML */ `<div
       part="container"
       class="text-md text-primary"
     >
       <input
-        name="${name}"
-        value="${value}"
-        ${checked ? "checked" : ""}
-        ${disabled ? "disabled" : ""}
-        ${required ? "required" : ""}
         type="checkbox"
         part="input"
         class="shadow-on-interaction"
@@ -40,7 +29,9 @@ export class Checkbox extends BaseCheckboxElement {
       />
       <span part="label">
         <slot name="label">
-          <span ${label ? "" : "hidden"}>${esc(label)}</span>
+          <span part="fallback-label" ${label ? "" : "hidden"}
+            >${esc(label)}</span
+          >
         </slot>
       </span>
     </div>`;
@@ -59,28 +50,25 @@ export class Checkbox extends BaseCheckboxElement {
     oldValue: string | null,
     newValue: string | null,
   ) {
-    if (oldValue === newValue || !this._checkbox) return;
+    if (oldValue === newValue || !this._input) return;
 
-    this.render();
+    if (name === "label") {
+      const fallback = this._root.querySelector<HTMLElement>(
+        "[part=fallback-label]",
+      );
+      if (fallback) {
+        fallback.textContent = newValue ?? "";
+        fallback.hidden = newValue === null || newValue === "";
+      }
+    } else this.syncAttributeToChild(name);
   }
 
-  //----integrate form----
   private bindings() {
-    this._checkbox = this._root.querySelector("input[type=checkbox]")!;
-
-    this._checkbox.addEventListener("change", (event) => {
-      this._internals.setFormValue(this._checkbox?.checked ? this.value : null);
-
-      this.dispatchEvent(
-        new Event("change", { composed: true, bubbles: true }),
-      );
-    });
-
-    if (this._checkbox.checked) {
-      this._checkbox.dispatchEvent(
-        new Event("change", { composed: true, bubbles: true }),
-      );
+    this._input = this._root.querySelector<HTMLInputElement>("[part=input]")!;
+    for (const name of BaseCheckboxElement.observedAttributes) {
+      if (name !== "label") this.syncAttributeToChild(name);
     }
+    this.bindCheckboxEvents();
   }
 }
 

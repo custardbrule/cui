@@ -6,23 +6,15 @@ import { BaseCheckboxElement } from "@/components/checkboxes/base";
 
 export class Checkbox extends BaseCheckboxElement {
   render() {
-    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
-    const label = this.getAttribute("label") || "";
-    const name = this.getAttribute("name") || "";
-    const value = this.getAttribute("value") || "";
-    const checked = this.hasAttribute("checked");
-    const disabled = this.hasAttribute("disabled");
-    const required = this.hasAttribute("required");
-
-    root.adoptedStyleSheets = [presetsheet, utilities, schemesheet, stylesheet];
-    root.innerHTML = /* HTML */ `
+    this._root.adoptedStyleSheets = [
+      presetsheet,
+      utilities,
+      schemesheet,
+      stylesheet,
+    ];
+    this._root.innerHTML = /* HTML */ `
       <div class="toggle-checkbox-wrapper">
         <input
-          name="${name}"
-          value="${value}"
-          ${checked ? "checked" : ""}
-          ${disabled ? "disabled" : ""}
-          ${required ? "required" : ""}
           type="checkbox"
           part="input"
           tabindex="-1"
@@ -47,28 +39,17 @@ export class Checkbox extends BaseCheckboxElement {
     oldValue: string | null,
     newValue: string | null,
   ) {
-    if (oldValue === newValue || !this._checkbox) return;
+    if (oldValue === newValue || !this._input) return;
 
-    this.render();
+    if (name !== "label") this.syncAttributeToChild(name);
   }
 
-  //----integrate form----
   private bindings() {
-    this._checkbox = this._root.querySelector("input[type=checkbox]")!;
-
-    this._checkbox.addEventListener("change", (event) => {
-      this._internals.setFormValue(this._checkbox?.checked ? this.value : null);
-
-      this.dispatchEvent(
-        new Event("change", { composed: true, bubbles: true }),
-      );
-    });
-
-    if (this._checkbox.checked) {
-      this._checkbox.dispatchEvent(
-        new Event("change", { composed: true, bubbles: true }),
-      );
+    this._input = this._root.querySelector<HTMLInputElement>("[part=input]")!;
+    for (const name of BaseCheckboxElement.observedAttributes) {
+      if (name !== "label") this.syncAttributeToChild(name);
     }
+    this.bindCheckboxEvents();
   }
 }
 

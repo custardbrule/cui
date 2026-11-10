@@ -17,11 +17,17 @@ const TEXTAREA_FORWARDED = [
 
 // plain attributes copied to the inner <input>
 const FORWARDED = [
+  "accept",
+  "align",
+  "alt",
   "type",
+  "capture",
+  "checked",
   "placeholder",
   "disabled",
   "readonly",
   "required",
+  "dirname",
   "name",
   "value",
   "min",
@@ -32,6 +38,18 @@ const FORWARDED = [
   "step",
   "autocomplete",
   "inputmode",
+  "formaction",
+  "formenctype",
+  "formmethod",
+  "formnovalidate",
+  "formtarget",
+  "height",
+  "multiple",
+  "size",
+  "src",
+  "usemap",
+  "width",
+  "webkitdirectory",
 ];
 
 // events usable as c-on<event> -> on<event> on the inner input

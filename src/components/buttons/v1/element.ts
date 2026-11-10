@@ -2,24 +2,28 @@ import schemesheet from "@/shared/css/scheme.scss" with { type: "css" };
 import presetsheet from "@/shared/css/preset.scss" with { type: "css" };
 import utilities from "@/shared/css/utilities.scss" with { type: "css" };
 import stylesheet from "./style.scss" with { type: "css" };
-import { esc } from "@/shared/utils";
 import { BaseButtonElement } from "@/components/buttons/base";
 
-const buttonTypes = ["button", "submit", "reset"] as const;
-
 export class Button extends BaseButtonElement {
-  static observedAttributes = ["type", "disabled", "variant", "size", "label"];
-
-  get label() {
-    return this.getAttribute("label") || "";
-  }
+  static observedAttributes = [
+    "type",
+    "disabled",
+    "variant",
+    "size",
+    "name",
+    "value",
+    "formaction",
+    "formenctype",
+    "formmethod",
+    "formnovalidate",
+    "formtarget",
+    "command",
+    "commandfor",
+    "popovertarget",
+    "popovertargetaction",
+  ];
 
   render() {
-    const type =
-      buttonTypes.find(
-        (buttonType) => buttonType === this.getAttribute("type"),
-      ) ?? "button";
-
     this._root.adoptedStyleSheets = [
       presetsheet,
       utilities,
@@ -27,15 +31,8 @@ export class Button extends BaseButtonElement {
       stylesheet,
     ];
     this._root.innerHTML = /* HTML */ `
-      <button
-        part="button"
-        class="round-sm"
-        type="${type}"
-        ${this.disabled ? "disabled" : ""}
-      >
-        <slot>
-          <slot name="label">${esc(this.label)}</slot>
-        </slot>
+      <button part="button" class="round-sm">
+        <slot> </slot>
       </button>
     `;
 
@@ -44,6 +41,13 @@ export class Button extends BaseButtonElement {
 
   private bindings() {
     this._button = this._root.querySelector("button")!;
+    for (const name of Button.observedAttributes) {
+      if (["variant", "size"].includes(name)) continue;
+
+      const value = this.getAttribute(name);
+      if (value !== null) this._button.setAttribute(name, value);
+    }
+
     this._button.addEventListener("click", () => {
       switch (this._button!.type) {
         case "submit":

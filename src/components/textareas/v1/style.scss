@@ -1,6 +1,6 @@
 .wrapper {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   align-items: baseline;
   width: 100%;
 }
@@ -25,12 +25,12 @@ label {
 }
 
 [part="textarea"] {
-  width: 100%;
+  width: 240px;
   padding: 4px 8px;
   min-height: 120px;
   min-width: 0;
   max-width: 100%;
-  flex: 1;
+  flex: 0 1 240px;
   resize: vertical;
   font: inherit;
   box-sizing: border-box;

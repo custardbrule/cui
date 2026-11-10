@@ -57,7 +57,6 @@ export class Button extends BaseButtonElement {
           this.form?.reset();
           break;
         default:
-          this._button!.onclick = this.onclick;
           break;
       }
     });

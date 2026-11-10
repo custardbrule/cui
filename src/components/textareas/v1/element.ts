@@ -29,16 +29,13 @@ export class Textarea extends BaseTextAreaElement {
     this._input =
       this._root.querySelector<HTMLTextAreaElement>("[part=textarea]")!;
 
-    this._input.addEventListener("change", () => {
-      this.internals.setFormValue(this._input!.value);
-      if (this._input!.validity.valid) this.internals.setValidity({});
-      else
-        this.internals.setValidity(
-          this._input!.validity,
-          this._input!.validationMessage,
-          this._input!,
-        );
+    this._input.addEventListener("input", () => {
+      this.syncFormState();
+      this.dispatchEvent(new Event("input", { bubbles: true }));
+    });
 
+    this._input.addEventListener("change", () => {
+      this.syncFormState();
       this.dispatchEvent(new Event("change", { bubbles: true }));
     });
 
@@ -50,6 +47,19 @@ export class Textarea extends BaseTextAreaElement {
     for (const name of Textarea.observedAttributes)
       this.syncAttributeToChild(name);
     this._input.dispatchEvent(new Event("change"));
+  }
+
+  private syncFormState() {
+    if (!this._input) return;
+
+    this.internals.setFormValue(this._input.value);
+    if (this._input.validity.valid) this.internals.setValidity({});
+    else
+      this.internals.setValidity(
+        this._input.validity,
+        this._input.validationMessage,
+        this._input,
+      );
   }
 
   render() {

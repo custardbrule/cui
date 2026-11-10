@@ -81,6 +81,16 @@ export class Select extends BaseSelectElement {
 
   disconnectedCallback() {}
 
+  get value() {
+    return this._select?.value ?? "";
+  }
+
+  set value(value: string) {
+    if (!this._select) return;
+    this._select.value = value;
+    this.syncFormValue();
+  }
+
   attributeChangedCallback(
     name: string,
     oldValue: string | null,
@@ -124,7 +134,10 @@ export class Select extends BaseSelectElement {
     );
     this._options.forEach((el) => this._select!.append(el));
 
-    this._select.addEventListener("change", () => this.syncFormValue());
+    this._select.addEventListener("change", () => {
+      this.syncFormValue();
+      this.dispatchEvent(new Event("change", { bubbles: true }));
+    });
     this.syncFormValue();
   }
 

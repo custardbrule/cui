@@ -5,3 +5,7 @@ export { Card as CardV2 } from "@/components/cards/v2/element";
 export { Card as CardV3 } from "@/components/cards/v3/element";
 export { Header as HeaderV1 } from "@/components/headers/v1/element";
 export { Textarea as TextareaV1 } from "@/components/textareas/v1/element";
+export { Select as SelectV1 } from "@/components/selects/v1/element";
+export { Checkbox as CheckboxV1 } from "@/components/checkboxes/v1/element";
+export { Checkbox as CheckboxV2 } from "@/components/checkboxes/v2/element";
+export { Radio as RadioV1 } from "@/components/radios/v1/element";

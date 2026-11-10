@@ -17,6 +17,19 @@ class BaseTextAreaElement extends HTMLElement {
   get value() {
     return this._input?.value || "";
   }
+  set value(value: string) {
+    if (!this._input) return;
+
+    this._input.value = value;
+    this.internals.setFormValue(value);
+    if (this._input.validity.valid) this.internals.setValidity({});
+    else
+      this.internals.setValidity(
+        this._input.validity,
+        this._input.validationMessage,
+        this._input,
+      );
+  }
 
   get name() {
     return this._input?.name || "";

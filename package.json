@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/lib/types/index.d.ts",
       "import": "./dist/lib/index.js"
+    },
+    "./react": {
+      "types": "./dist/lib/types/react.d.ts",
+      "import": "./dist/lib/react.js"
     }
   },
   "customElements": "dist/lib/custom-elements.json",
@@ -24,10 +28,11 @@
     "typecheck": "tsc --noEmit",
     "build:elements": "rollup -c rollup.elements.config.js",
     "build:lib": "rollup -c rollup.lib.config.js",
+    "build:react": "rollup -c rollup.react.config.js",
     "build:server": "rollup -c rollup.server.config.js",
-    "build:types": "tsc -p tsconfig.build.json",
+    "build:types": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "build:manifest": "cem analyze && tsx scripts/manifest-attrs.ts",
-    "build": "npm run clean && npm run typecheck && npm run build:elements && npm run build:lib && npm run build:server && npm run build:types && npm run build:manifest",
+    "build": "npm run clean && npm run typecheck && npm run build:elements && npm run build:lib && npm run build:react && npm run build:server && npm run build:types && npm run build:manifest",
     "watch:elements": "rollup -c rollup.elements.config.js -w",
     "watch:lib": "rollup -c rollup.lib.config.js -w",
     "watch:server": "rollup -c rollup.server.config.js -w",
@@ -41,6 +46,7 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^1.0.2",
     "@types/node": "^26.6.6",
+    "@types/react": "^19.0.0",
     "esbuild": "^0.28.2",
     "fast-glob": "^3.3.3",
     "prettier": "^3.9.10",
@@ -48,7 +54,11 @@
     "rollup": "^4.67.4",
     "rollup-plugin-esbuild": "^6.2.1",
     "sass": "^1.108.0",
+    "tsc-alias": "^1.9.10",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
   }
 }
